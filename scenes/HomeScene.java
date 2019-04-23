@@ -4,6 +4,8 @@
 
 package scenes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -29,6 +31,9 @@ public class HomeScene extends Scene {
     this.mainStage.setResizable(false);
     this.mainStage.setTitle("Home");
 
+    SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss"); //sets new date formats for timestamp in titleLabel in 24 hour format
+    SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); //ex: Mon Apr 01 2019 14:02:13
+    
     //top part of BorderPane
     //TODO: dynamically change the time/date
     HBox topControl = new HBox(10);
@@ -44,7 +49,7 @@ public class HomeScene extends Scene {
     
     Label titleLabel = new Label(); //title label for top of UI
     titleLabel.setStyle("-fx-font-size:20");
-    titleLabel.setText("Fair Job Planning System");
+    titleLabel.setText("Fair Job Planning System            "+date.format(new Date())+" "+clock.format(new Date()));
     titleLabel.setPadding(new Insets(20, 0, 20, 150));
     
     topButtons.getChildren().addAll(addEmp, addTasks);
