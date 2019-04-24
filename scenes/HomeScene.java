@@ -14,6 +14,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import taskMatch.Employee;
 import javafx.scene.layout.BorderPane;
 
 public class HomeScene extends Scene {
@@ -98,19 +100,17 @@ public class HomeScene extends Scene {
 
     // creates a clickable list view
     // TODO: dynamically change employee list
-    ListView<String> employeeList = new ListView<>();
+    ListView<Employee> employeeList = new ListView<>();
 
-    ObservableList<String> items =
-        FXCollections.observableArrayList("[employee1Name]\t\t\t[employee1ID]",
-            "[employee2Name]\t\t\t[employee2ID]",
-            "[employee3Name]\t\t\t[employee3ID]");
+    ObservableList<Employee> items =
+        FXCollections.observableArrayList(new Employee("John"), new Employee("Paul"), new Employee("George"),
+            new Employee("Ringo"));
 
     employeeList.setItems(items);
-    
     employeeList.setOnMouseClicked(e -> { 
       Main.switchToOptions(this.mainStage); 
     });
-
+    
     centerControls.getChildren().addAll(header, employeeList);
 
     root.setCenter(centerControls);
