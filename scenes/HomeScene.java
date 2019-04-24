@@ -72,7 +72,10 @@ public class HomeScene extends Scene {
 
     Button addTasksButton = new Button("Add Tasks");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
-
+    addTasksButton.setOnAction(e ->{
+      Main.switchToAddTasksAuto(this.mainStage);
+    });
+    
     Label titleLabel = new Label(); // title label for top of UI
     titleLabel.setStyle("-fx-font-size:20");
     titleLabel.setText("Fair Job Planning System            " + date.format(new Date()) + " "
@@ -113,13 +116,13 @@ public class HomeScene extends Scene {
 
     ObservableList<Employee> items =
         FXCollections.observableArrayList(
-            new Employee("John"), 
-            new Employee("Paul"), 
-            new Employee("George"),
-            new Employee("Ringo")
+            new Employee("John", 10001), 
+            new Employee("Paul", 10002), 
+            new Employee("George", 10003),
+            new Employee("Ringo", 100005)
     );
 
-    //items.addAll(employeesAdded); //TODO: uncomment this line when functionality is finished
+    //items.addAll(employeesAdded); TODO: uncomment when functionality is finished
     
     employeeList.setItems(items);
     employeeList.setOnMouseClicked(e -> {
