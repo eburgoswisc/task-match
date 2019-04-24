@@ -64,6 +64,9 @@ public class HomeScene extends Scene {
 
     Button addEmployeesButton = new Button("Add Employees");
     addEmployeesButton.setMinWidth(topButtons.getPrefWidth());
+    addEmployeesButton.setOnAction(e -> {
+      Main.switchToAddEmployeesAuto(this.mainStage);
+      });
 
     Button addTasksButton = new Button("Add Tasks");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
@@ -96,7 +99,7 @@ public class HomeScene extends Scene {
    */
   private void initCenter(BorderPane root) {
     VBox centerControls = new VBox(10); // holds all elements for center part
-    centerControls.setPadding(new Insets(0, 60, 50, 60)); // adds padding to shrink center control
+    centerControls.setPadding(new Insets(0, 60, 10, 60)); // adds padding to shrink center control
 
     Label header = new Label("Employees Added to Unit:"); // header for center control
     header.setFont(new Font(20));
@@ -151,8 +154,9 @@ public class HomeScene extends Scene {
     imv.setSmooth(true);
     imv.setCache(true);
     
+    bottomControls.setSpacing(160);
     logoPosition.getChildren().add(imv);
-    bottomControls.getChildren().addAll(generateReport, imv);
+    bottomControls.getChildren().addAll(generateReport, logoPosition);
     root.setBottom(bottomControls);
   }
 }

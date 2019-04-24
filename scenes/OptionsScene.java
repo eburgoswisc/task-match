@@ -9,6 +9,7 @@ package scenes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import application.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -51,7 +52,7 @@ public class OptionsScene extends Scene {
     this.mainStage.setTitle("Employee Options");
     this.mainStage.setWidth(width);
     this.mainStage.setHeight(height);
-    this.mainStage.setResizable(false);
+    this.mainStage.setResizable(true);
 
     // BorderPane region methods
     initTop(root);
@@ -175,8 +176,10 @@ public class OptionsScene extends Scene {
     backButton.setStyle("-fx-font-size:20");
     backButton.setMinWidth(100);
     backButton.setMinHeight(50);
-
-    // TODO Make button functional
+    
+    backButton.setOnAction(e -> {
+      Main.switchToHome(this.mainStage);
+      });
 
     // Set elements in the HBox and set the BorderPane bottom panel
     bottomControls.getChildren().addAll(backButton);
