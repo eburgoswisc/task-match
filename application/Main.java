@@ -50,7 +50,7 @@ public class Main extends Application {
   public static void switchToResults(Stage primaryStage) {
 	    try {
 	      BorderPane root = new BorderPane();
-	      resultsScene = new ResultsScene(primaryStage, root, 620, 380);
+	      resultsScene = new ResultsScene(primaryStage, root, 820, 420);
 	      primaryStage.setScene(resultsScene);
 	      primaryStage.show();
 	    } catch (Exception e) {
