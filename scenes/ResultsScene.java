@@ -1,5 +1,5 @@
 /**
- * Author: Emanuel
+ * Author: Emanuel Burgos
  */
 package scenes;
 
@@ -23,14 +23,30 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 
+/**
+ * Scene that shows the report of tasks assign to employees.
+ * Generates a file if desired.
+ * 
+ * @author emanuelburgos
+ *
+ */
 public class ResultsScene extends Scene {
-  
+  // Main Stage
   Stage mainStage;
   
+  // Timestamp objects
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss"); 
   private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01 2019 14:02:13
   
-  public ResultsScene(Stage mainStage, BorderPane root, double width, double height) {
+  /**
+   * Constructor 
+   * 
+ * @param mainStage - Stage object
+ * @param root - Borderpane object
+ * @param width - int
+ * @param height - int
+ */
+public ResultsScene(Stage mainStage, BorderPane root, double width, double height) {
     super(root, width, height);
     this.mainStage = mainStage;
     // Set property of scene
@@ -118,10 +134,14 @@ private void initTop(BorderPane root) {
     root.setTop(topBox);
 }
 
+/**
+ * Method for generating report file
+ */
 private void downloadReport() {
-	//
-	File f = new File("report.csv");
+	// Create file object
+	File f = new File("report.json");
 	try {
+		// Create a dummy file TODO: Report employees with task
 		f.createNewFile();
 	} catch (IOException e) {
 		System.out.println("File already exists");
