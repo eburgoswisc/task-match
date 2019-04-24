@@ -3,6 +3,7 @@
  */
 package scenes;
 
+import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -28,9 +29,19 @@ public class AddEmployeeSceneAuto extends Scene {
     root.setPadding(new Insets(10));
     
     Button inputFile = new Button("Input file");
+    
     Button addToUnit = new Button("Add to Unit");
+    
     Button addNewEmployee = new Button("Add New Employee");
+    addNewEmployee.setOnAction(e -> {
+      Main.switchToAddEmployeesManual(this.mainStage);
+      });
+    
     Button back = new Button("Back");
+    back.setOnAction(e -> {
+      Main.switchToHome(this.mainStage);
+      });
+    
     ObservableList<String> employees = FXCollections.observableArrayList(
 			"employee1", "employee2", "employee3", "employee4", "employee5");
 	ComboBox comboBox = new ComboBox(employees); //create a combo box object
