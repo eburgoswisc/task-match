@@ -19,7 +19,7 @@ public class Main extends Application {
   public void start(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      homeScene = new HomeScene(primaryStage, root, 900, 600);
+      homeScene = new HomeScene(primaryStage, root, 920, 600);
       primaryStage.setScene(homeScene);
       primaryStage.show();
     } catch (Exception e) {
@@ -30,7 +30,7 @@ public class Main extends Application {
   public static void switchToOptions(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      optionsScene = new OptionsScene(primaryStage, root, 750, 420);
+      optionsScene = new OptionsScene(primaryStage, root, 620, 380);
       primaryStage.setScene(optionsScene);
       primaryStage.show();
     } catch (Exception e) {

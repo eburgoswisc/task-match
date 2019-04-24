@@ -51,7 +51,7 @@ public class OptionsScene extends Scene {
     this.mainStage.setTitle("Employee Options");
     this.mainStage.setWidth(width);
     this.mainStage.setHeight(height);
-    this.mainStage.setResizable(false);
+    this.mainStage.setResizable(true);
 
     // BorderPane region methods
     initTop(root);
@@ -76,7 +76,7 @@ public class OptionsScene extends Scene {
     titleLabel.setStyle("-fx-font-size:20");
     titleLabel.setText("Fair Job Planning System            " + date.format(new Date()) + " "
         + clock.format(new Date()));
-    titleLabel.setPadding(new Insets(20, 0, 0, 60));
+    titleLabel.setPadding(new Insets(0, 0, -10, 20));
 
     // timeline dynamically updates the label every second for a real-time clock
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
