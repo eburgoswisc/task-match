@@ -1,5 +1,5 @@
 /**
- * Author: Adam Jackson
+ * Author: Adam Jackson 
  * 
  * This scene is the main options scene where the program first opens up.
  */
@@ -8,13 +8,13 @@ package scenes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import application.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,6 +34,7 @@ import javafx.scene.layout.BorderPane;
 public class HomeScene extends Scene {
 
   Stage mainStage;
+  List<Employee> employeesAdded;
   
   // sets new date formats for
   // time stamp in titleLabel
@@ -41,11 +42,12 @@ public class HomeScene extends Scene {
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss"); 
   private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01 2019 14:02:13
   
-  public HomeScene(Stage mainStage, BorderPane root, int width, int height) {
+  public HomeScene(Stage mainStage, BorderPane root, int width, int height, List<Employee> employeesAdded) {
     super(root, width, height);
 
     this.mainStage = mainStage;
     this.mainStage.setTitle("Home");
+    this.employeesAdded = employeesAdded;
     
     initTop(root);
     initCenter(root);
@@ -66,7 +68,7 @@ public class HomeScene extends Scene {
     addEmployeesButton.setMinWidth(topButtons.getPrefWidth());
     addEmployeesButton.setOnAction(e -> {
       Main.switchToAddEmployeesAuto(this.mainStage);
-      });
+    });
 
     Button addTasksButton = new Button("Add Tasks");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
@@ -110,12 +112,20 @@ public class HomeScene extends Scene {
     ListView<Employee> employeeList = new ListView<>();
 
     ObservableList<Employee> items =
-        FXCollections.observableArrayList(new Employee("John"), new Employee("Paul"), new Employee("George"),
-            new Employee("Ringo"));
+        FXCollections.observableArrayList(
+            new Employee("John"), 
+            new Employee("Paul"), 
+            new Employee("George"),
+            new Employee("Ringo")
+    );
 
+    //items.addAll(employeesAdded); //TODO: uncomment this line when functionality is finished
+    
     employeeList.setItems(items);
-    employeeList.setOnMouseClicked(e -> { 
-      Main.switchToOptions(this.mainStage); 
+    employeeList.setOnMouseClicked(e -> {
+      if(employeeList.getSelectionModel().getSelectedItem() instanceof Employee) {
+        Main.switchToOptions(this.mainStage); 
+      }
     });
     
     centerControls.getChildren().addAll(header, employeeList);
@@ -139,7 +149,7 @@ public class HomeScene extends Scene {
     generateReport.setMinWidth(200);
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
-    Main.switchToResults(this.mainStage);
+      Main.switchToResults(this.mainStage);
     });
 
     HBox logoPosition = new HBox(10);
