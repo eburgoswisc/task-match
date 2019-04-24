@@ -42,7 +42,7 @@ public class HomeScene extends Scene {
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss"); 
   private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01 2019 14:02:13
   
-  public HomeScene(Stage mainStage, BorderPane root, int width, int height, List<Employee> employeesAdded) {
+  public HomeScene(Stage mainStage, BorderPane root, int width, int height) {
     super(root, width, height);
 
     this.mainStage = mainStage;
