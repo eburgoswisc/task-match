@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: aTeam7
+Main-Class: application.Main
+
