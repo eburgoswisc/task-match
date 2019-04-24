@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import scenes.HomeScene;
 import scenes.OptionsScene;
+import scenes.ResultsScene;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
@@ -37,6 +38,17 @@ public class Main extends Application {
       e.printStackTrace();
     }
   }
+  
+  public static void switchToResults(Stage primaryStage) {
+	    try {
+	      BorderPane root = new BorderPane();
+	      resultsScene = new ResultsScene(primaryStage, root, 620, 380);
+	      primaryStage.setScene(resultsScene);
+	      primaryStage.show();
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	  }
   
   public static void main(String[] args) {
     launch(args);
