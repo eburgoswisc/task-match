@@ -51,7 +51,7 @@ public class OptionsScene extends Scene {
     this.mainStage.setTitle("Employee Options");
     this.mainStage.setWidth(width);
     this.mainStage.setHeight(height);
-    this.mainStage.setResizable(true);
+    this.mainStage.setResizable(false);
 
     // BorderPane region methods
     initTop(root);

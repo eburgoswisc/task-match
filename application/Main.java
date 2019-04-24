@@ -31,7 +31,7 @@ public class Main extends Application {
   public static void switchToOptions(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      optionsScene = new OptionsScene(primaryStage, root, 620, 380);
+      optionsScene = new OptionsScene(primaryStage, root, 630, 380);
       primaryStage.setScene(optionsScene);
       primaryStage.show();
     } catch (Exception e) {

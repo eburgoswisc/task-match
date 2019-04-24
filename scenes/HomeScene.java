@@ -21,8 +21,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import taskMatch.Employee;
@@ -96,7 +99,8 @@ public class HomeScene extends Scene {
     centerControls.setPadding(new Insets(0, 60, 50, 60)); // adds padding to shrink center control
 
     Label header = new Label("Employees Added to Unit:"); // header for center control
-    header.setPadding(new Insets(20, 20, 10, 0)); // adds padding around header
+    header.setFont(new Font(20));
+    header.setPadding(new Insets(20, 20, 0, 0)); // adds padding around header
 
     // creates a clickable list view
     // TODO: dynamically change employee list
@@ -123,7 +127,7 @@ public class HomeScene extends Scene {
   private void initBottom(BorderPane root) {
     HBox bottomControls = new HBox(10);
     bottomControls.setPadding(new Insets(0, 0, 20, 0));
-    bottomControls.setAlignment(Pos.CENTER);
+    bottomControls.setAlignment(Pos.BOTTOM_CENTER);
 
     Button generateReport = new Button();
     generateReport.setWrapText(true);
@@ -132,10 +136,23 @@ public class HomeScene extends Scene {
     generateReport.setMinWidth(200);
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
-      Main.switchToResults(this.mainStage);
+    Main.switchToResults(this.mainStage);
     });
 
-    bottomControls.getChildren().addAll(generateReport);
+    HBox logoPosition = new HBox(10);
+    logoPosition.setAlignment(Pos.BOTTOM_RIGHT);
+    
+    // TODO: Fix so logo is at bottom left of window
+    ImageView imv = new ImageView();
+    Image logo = new Image("Residence Hall Facilities_color-flush.png");
+    imv.setImage(logo);
+    imv.setFitWidth(400);
+    imv.setPreserveRatio(true);
+    imv.setSmooth(true);
+    imv.setCache(true);
+    
+    logoPosition.getChildren().add(imv);
+    bottomControls.getChildren().addAll(generateReport, imv);
     root.setBottom(bottomControls);
   }
 }
