@@ -3,6 +3,9 @@ package application;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import scenes.AddEmployeeSceneAuto;
+import scenes.AddEmployeeSceneManual;
+import scenes.AddTaskSceneAuto;
+import scenes.AddTaskSceneManual;
 import scenes.HomeScene;
 import scenes.OptionsScene;
 import scenes.ResultsScene;
@@ -18,6 +21,8 @@ public class Main extends Application {
   private static Scene resultsScene;
   private static Scene addEmployeesAuto;
   private static Scene addEmployeesManual;
+  private static Scene addTasksAuto;
+  private static Scene addTasksManual;
   
   @Override
   public void start(Stage primaryStage) {
@@ -67,7 +72,7 @@ public class Main extends Application {
   public static void switchToAddEmployeesAuto(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      addEmployeesAuto = new AddEmployeeSceneAuto(primaryStage, root, 9000, 6080);
+      addEmployeesAuto = new AddEmployeeSceneAuto(primaryStage, root, 500, 500);
       primaryStage.setScene(addEmployeesAuto);
       primaryStage.show();
     } catch (Exception e) {
@@ -78,8 +83,30 @@ public class Main extends Application {
   public static void switchToAddEmployeesManual(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      addEmployeesManual = new HomeScene(primaryStage, root, 9000, 6080);
+      addEmployeesManual = new AddEmployeeSceneManual(primaryStage, root, 500, 500);
       primaryStage.setScene(addEmployeesManual);
+      primaryStage.show();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
+  public static void switchToAddTasksManual(Stage primaryStage) {
+    try {
+      BorderPane root = new BorderPane();
+      addTasksManual = new AddTaskSceneManual(primaryStage, root, 500, 500);
+      primaryStage.setScene(addTasksManual);
+      primaryStage.show();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
+  public static void switchToAddTasksAuto(Stage primaryStage) {
+    try {
+      BorderPane root = new BorderPane();
+      addTasksAuto = new AddTaskSceneAuto(primaryStage, root, 500, 500);
+      primaryStage.setScene(addTasksAuto);
       primaryStage.show();
     } catch (Exception e) {
       e.printStackTrace();
