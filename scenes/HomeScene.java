@@ -8,6 +8,7 @@ package scenes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import application.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,7 +40,6 @@ public class HomeScene extends Scene {
     super(root, width, height);
 
     this.mainStage = mainStage;
-    this.mainStage.setResizable(false);
     this.mainStage.setTitle("Home");
     
     initTop(root);
@@ -102,9 +102,14 @@ public class HomeScene extends Scene {
 
     ObservableList<String> items =
         FXCollections.observableArrayList("[employee1Name]\t\t\t[employee1ID]",
-            "[employee2Name]\t\t\t[employee2ID]", "[employee3Name]\t\t\t[employee3ID]");
+            "[employee2Name]\t\t\t[employee2ID]",
+            "[employee3Name]\t\t\t[employee3ID]");
 
     employeeList.setItems(items);
+    
+    employeeList.setOnMouseClicked(e -> { 
+      Main.switchToOptions(this.mainStage); 
+    });
 
     centerControls.getChildren().addAll(header, employeeList);
 
