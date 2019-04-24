@@ -1,6 +1,7 @@
 package application;
 
 import java.util.List;
+import java.util.TreeMap;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import scenes.AddEmployeeSceneAuto;
@@ -9,6 +10,7 @@ import scenes.AddTaskSceneAuto;
 import scenes.AddTaskSceneManual;
 import scenes.HomeScene;
 import taskMatch.Employee;
+import taskMatch.Task;
 import scenes.OptionsScene;
 import scenes.ResultsScene;
 import javafx.scene.Scene;
@@ -18,7 +20,8 @@ import javafx.scene.layout.BorderPane;
 public class Main extends Application {
   
   private static Scene currentScene;
-  public static List<Employee> employeeList;
+  private TreeMap<String, Employee> allEmployees;
+  private List<Task> allTasks;
   
   @Override
   public void start(Stage primaryStage) {

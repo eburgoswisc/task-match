@@ -35,6 +35,7 @@ public class HomeScene extends Scene {
 
   Stage mainStage;
   List<Employee> employeesAdded;
+  protected static List<Employee> employeeList;
   
   // sets new date formats for
   // time stamp in titleLabel
