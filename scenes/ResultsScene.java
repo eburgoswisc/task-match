@@ -5,7 +5,10 @@ package scenes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.File;
+import java.io.IOException;
 
+import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -51,11 +54,19 @@ private void initBottom(BorderPane root) {
 	  bottomButtons.setPrefWidth(150);
 	  bottomButtons.setAlignment(Pos.CENTER);
 	  bottomButtons.setPadding(new Insets(0, 60, 50, 60)); 
+	  bottomButtons.setSpacing(50);
 	  
 	  // Get buttons
 	  Button backBut = new Button("Back");
+	  backBut.setOnAction(e ->{
+		  Main.switchToHome(this.mainStage);
+	  });
 
+	  // Report button
 	  Button downReportBut = new Button("Download Report");
+	  downReportBut.setOnAction(e -> {
+		  downloadReport();;
+	  });
 	  // Add to HBox
 	  bottomButtons.getChildren().addAll(downReportBut, backBut);
 	  
@@ -97,7 +108,7 @@ private void initTop(BorderPane root) {
 	// Set Label
 	Label titleLabel = new Label(); // title label for top of UI
     titleLabel.setStyle("-fx-font-size:20");
-    titleLabel.setText("Fair Job Planning System            " + date.format(new Date()) + " "
+    titleLabel.setText("Fair Job Planning System " + date.format(new Date()) + " "
         + clock.format(new Date()));
     titleLabel.setPadding(new Insets(20, 0, 20, 150));
     
@@ -105,6 +116,16 @@ private void initTop(BorderPane root) {
     topBox.getChildren().addAll(titleLabel);
     // Add to BorderPane root
     root.setTop(topBox);
+}
+
+private void downloadReport() {
+	//
+	File f = new File("report.csv");
+	try {
+		f.createNewFile();
+	} catch (IOException e) {
+		System.out.println("File already exists");
+	}
 }
 
 }
