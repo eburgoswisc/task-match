@@ -131,6 +131,9 @@ public class HomeScene extends Scene {
     generateReport.setStyle("-fx-font-size:20");
     generateReport.setMinWidth(200);
     generateReport.setMinHeight(100);
+    generateReport.setOnAction(e -> {
+      Main.switchToResults(this.mainStage);
+    });
 
     bottomControls.getChildren().addAll(generateReport);
     root.setBottom(bottomControls);
