@@ -71,7 +71,7 @@ public class Main extends Application {
   public static void switchToAddEmployeesAuto(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 500, 500);
+      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 700, 500);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {
@@ -82,7 +82,7 @@ public class Main extends Application {
   public static void switchToAddEmployeesManual(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new AddEmployeeSceneManual(primaryStage, root, 500, 500);
+      currentScene = new AddEmployeeSceneManual(primaryStage, root, 700, 500);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {
@@ -93,7 +93,7 @@ public class Main extends Application {
   public static void switchToAddTasksManual(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new AddTaskSceneManual(primaryStage, root, 500, 500);
+      currentScene = new AddTaskSceneManual(primaryStage, root, 600, 500);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {
@@ -104,7 +104,7 @@ public class Main extends Application {
   public static void switchToAddTasksAuto(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new AddTaskSceneAuto(primaryStage, root, 500, 500);
+      currentScene = new AddTaskSceneAuto(primaryStage, root, 900, 500);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {

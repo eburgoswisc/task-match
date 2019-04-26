@@ -14,6 +14,7 @@ public class AddTaskSceneManual extends Scene {
   public AddTaskSceneManual(Stage mainStage, Parent root, double width, double height) {
     super(root, width, height);
     this.mainStage = mainStage;
+    this.mainStage.setTitle("Add a New Task");
   }
 
 }
