@@ -14,6 +14,7 @@ import java.util.Set;
 import javax.tools.FileObject;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import application.Main;
@@ -31,6 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import taskMatch.Employee;
 import taskMatch.JSONParser;
+import taskMatch.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -150,8 +152,9 @@ private void initTop(BorderPane root) {
 /**
  * Method for generating report file
  * @throws JSONException 
+ * 
  */
-private void downloadReport() throws JSONException {
+private void downloadReport() {
 	
 	//Main.allEmployees;
 	// Main.allTasks;
@@ -164,9 +167,15 @@ private void downloadReport() throws JSONException {
 	JSONArray tasksArray = new JSONArray();
 	
 	// Name for output file: test_output.json
-	File output = new File("test_output.json");
+	FileWriter f = null;
+	try {
+		f = new FileWriter("test_output.json");
+	} catch (IOException e) {
+		// Do Nothing
+	}
 	
 	// Place inside loop
+	try {
 	while (employeeIt.hasNext()) {
 		Entry<String, Employee> node = employeeIt.next();
 		Employee e = node.getValue();
@@ -182,12 +191,21 @@ private void downloadReport() throws JSONException {
 	}
 	
 	// Loop through Tasks and make JSONObjects
-	
-	// Create file object
-	File f = new File("report.json");
+	for (Task t: Main.allTasks) {
+		JSONObject tJson = new JSONObject();
+		tJson.put("ID", t.getID());
+		tJson.put("Description", t.getDescription());
+		tJson.put("Favorable", t.isFavorable());
+	}
+	} catch (JSONException e) {
+		// Do nothing
+	}
 	try {
-		// Create a dummy file TODO: Report employees with task
-		f.createNewFile();
+		// Write JSONArrays
+		f.write(employeesArray.toString());
+		f.write(tasksArray.toString());
+		
+		
 	} catch (IOException e) {
 		System.out.println("File already exists");
 	}
