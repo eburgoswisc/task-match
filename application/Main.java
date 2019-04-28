@@ -16,12 +16,11 @@ import scenes.ResultsScene;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
-@SuppressWarnings("unused")
 public class Main extends Application {
   
   private static Scene currentScene;
-  private TreeMap<String, Employee> allEmployees;
-  private List<Task> allTasks;
+  public static TreeMap<String, Employee> allEmployees;
+  public static List<Task> allTasks;
   
   @Override
   public void start(Stage primaryStage) {

@@ -34,8 +34,7 @@ import javafx.scene.layout.BorderPane;
 public class HomeScene extends Scene {
 
   Stage mainStage;
-  List<Employee> employeesAdded;
-  protected static List<Employee> employeeList;
+  protected static List<Employee> employeeAddedList;
   
   // sets new date formats for
   // time stamp in titleLabel
@@ -48,7 +47,7 @@ public class HomeScene extends Scene {
 
     this.mainStage = mainStage;
     this.mainStage.setTitle("Home");
-    this.employeesAdded = employeesAdded;
+    this.employeeAddedList = employeeAddedList;
     
     initTop(root);
     initCenter(root);
