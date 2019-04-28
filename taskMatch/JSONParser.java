@@ -2,7 +2,14 @@ package taskMatch;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Map.Entry;
+
 import application.Main;
+import org.json.*;
 
 public class JSONParser {
   
@@ -12,9 +19,12 @@ public class JSONParser {
    * @param jaEmployees
    */
   private void addEmployees(JSONArray jaEmployees) {
-      //go throw the JSONArray jaEmployees 
-      for (Object o : jaEmployees) {
-          JSONObject jo = (JSONObject) o;//cast to json object
+      //go throw the JSONArray jaEmployees .
+      for (int i = 0; i < jaEmployees.length(); i++) {
+          JSONObject jo = null;
+		try {
+			jo = jaEmployees.getJSONObject(i);
+		
           //get and save ID, name, exceptionReport,scheduling, WIGrow,points
           int ID = (int) jo.get("ID");
           String name = (String) jo.get("name");
@@ -31,6 +41,8 @@ public class JSONParser {
           employee.setPointTask(points);
           //add employee to the treeMap
           Main.allEmployees.put(employee.getName(), employee);
+		} catch (JSONException e) {
+		}//cast to json object
       }
       
   }
@@ -43,8 +55,11 @@ public class JSONParser {
    */
   private void addTasks(JSONArray jaTasks)  {
       //go throw the JSONArray of tasks
-      for (Object o : jaTasks) {
-          JSONObject jo = (JSONObject) o;//cast to json object
+      for (int i = 0; i < jaTasks.length(); i++) {
+          JSONObject jo = null;
+		try {
+			jo = (JSONObject) jaTasks.get(i);
+
           //get and save ID, description, favorable
           int ID = (int) jo.get("ID");
           String description = (String) jo.get("Description");
@@ -53,6 +68,10 @@ public class JSONParser {
           Task task = new Task(description, favorable);
           task.setID(ID);
           Main.allTasks.add(task);
+		}
+          catch (JSONException e) {
+        	  // Do Nothing
+  		}//cast to json object
       }
   
   
@@ -80,13 +99,69 @@ public class JSONParser {
       
       } catch (FileNotFoundException e) {
           throw e;
-      } catch (Exception e) {
-          throw e;
+      } catch (JSONException e) {
+          // Do nothing
       }
   }
 
   private Object parse(FileReader fileReader) {
       // TODO Auto-generated method stub
       return null;
+  }
+  
+  public static void writeData() {
+	//Main.allEmployees;
+		// Main.allTasks;
+		// Get iterator for treemap
+		Set<Entry<String, Employee>> set = Main.allEmployees.entrySet();;
+		Iterator<Entry<String, Employee>> employeeIt = set.iterator(); 
+		
+		// Create JSONArray Objects
+		JSONArray employeesArray = new JSONArray();
+		JSONArray tasksArray = new JSONArray();
+		
+		// Name for output file: test_output.json
+		FileWriter f = null;
+		try {
+			f = new FileWriter("test_output.json");
+		} catch (IOException e) {
+			// Do Nothing
+		}
+		
+		// Place inside loop
+		try {
+		while (employeeIt.hasNext()) {
+			Entry<String, Employee> node = employeeIt.next();
+			Employee e = node.getValue();
+			JSONObject employee = new JSONObject();
+			employee.put("ID", e.getId());
+			employee.put("Name", e.getName());
+			employee.put("Exception Report", e.isExceptionReport());
+			employee.put("Scheduling", e.isScheduling());
+			employee.put("WIGrow", e.isWiGrow());
+			
+			// Add to JSON Array
+			employeesArray.put(employee);
+		}
+		
+		// Loop through Tasks and make JSONObjects
+		for (Task t: Main.allTasks) {
+			JSONObject tJson = new JSONObject();
+			tJson.put("ID", t.getID());
+			tJson.put("Description", t.getDescription());
+			tJson.put("Favorable", t.isFavorable());
+		}
+		} catch (JSONException e) {
+			// Do nothing
+		}
+		try {
+			// Write JSONArrays
+			f.write(employeesArray.toString());
+			f.write(tasksArray.toString());
+			
+			
+		} catch (IOException e) {
+			System.out.println("File already exists");
+		}
   }
 }
