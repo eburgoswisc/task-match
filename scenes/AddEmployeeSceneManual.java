@@ -56,11 +56,11 @@ public class AddEmployeeSceneManual extends Scene {
     
     Button cancel = new Button("Cancel");
     cancel.setOnAction(e ->{
-      Main.switchToHome(this.mainStage);
+      Main.switchToAddEmployeesAuto(this.mainStage);
     });
     Button add = new Button("Add");
     add.setOnAction(e ->{
-      Main.switchToHome(this.mainStage);
+      Main.switchToAddEmployeesAuto(this.mainStage);
     });
     
     

@@ -72,16 +72,16 @@ public class Main extends Application {
     }
   }
   
-//  public static void switchToAddEmployeesAuto(Stage primaryStage) {
-//    try {
-//      BorderPane root = new BorderPane();
-//      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 700, 500);
-//      primaryStage.setScene(currentScene);
-//      primaryStage.show();
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-//  }
+  public static void switchToAddEmployeesAuto(Stage primaryStage) {
+    try {
+      BorderPane root = new BorderPane();
+      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 330, 150);
+      primaryStage.setScene(currentScene);
+      primaryStage.show();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
   
   public static void switchToAddEmployeesManual(Stage primaryStage) {
     try {

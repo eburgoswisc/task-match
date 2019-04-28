@@ -67,10 +67,10 @@ public class HomeScene extends Scene {
     VBox topButtons = new VBox(10);
     topButtons.setPrefWidth(150);
 
-    Button addEmployeesButton = new Button("Add New Employee");
+    Button addEmployeesButton = new Button("Choose Employees");
     addEmployeesButton.setMinWidth(topButtons.getPrefWidth());
     addEmployeesButton.setOnAction(e -> {
-      Main.switchToAddEmployeesManual(this.mainStage);
+      Main.switchToAddEmployeesAuto(this.mainStage);
     });
 
     Button addTasksButton = new Button("Add New Task");

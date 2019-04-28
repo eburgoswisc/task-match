@@ -26,21 +26,21 @@ public class AddEmployeeSceneAuto extends Scene {
   public AddEmployeeSceneAuto(Stage mainStage, BorderPane root, double width, double height) {
     super(root, width, height);
     this.mainStage = mainStage;
-
-
+    this.mainStage.setTitle("Employees working today");
+    
     root.autosize();
     root.setPadding(new Insets(10));
 
-    Button inputFile = new Button("Input file");
-
-    FileChooser fileChooser = new FileChooser();
-
-    fileChooser.setTitle("Input File");
-
-    fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
-    inputFile.setOnAction(e -> {
-      File selectedFile = fileChooser.showOpenDialog(mainStage);
-    });
+    Label inputFile = new Label("File loaded: ");
+//
+//    FileChooser fileChooser = new FileChooser();
+//
+//    fileChooser.setTitle("Input File");
+//
+//    fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
+//    inputFile.setOnAction(e -> {
+//      File selectedFile = fileChooser.showOpenDialog(mainStage);
+//    });
 
     Button addToUnit = new Button("Add to Unit");
 
@@ -57,24 +57,19 @@ public class AddEmployeeSceneAuto extends Scene {
     ObservableList<String> employees = FXCollections.observableArrayList("employee1", "employee2",
         "employee3", "employee4", "employee5");
     ComboBox comboBox = new ComboBox(employees); // create a combo box object
-    Label l = new Label("                                                  "
-        + "                                 " + "        ");
 
     HBox line1 = new HBox(10);
     HBox line2 = new HBox(10);
-    HBox line3 = new HBox(10);
-    HBox empty = new HBox(50);
+    HBox line3 = new HBox(100);
 
-
+    line1.setPadding(new Insets(0, 0, 30, 0));
+    
     line1.getChildren().addAll(inputFile, new Label("data.json"));
 
     line2.getChildren().addAll(comboBox, addToUnit);
 
-    line3.getChildren().addAll(addNewEmployee, empty, l, back);
-    empty.getChildren().addAll(l);
+    line3.getChildren().addAll(addNewEmployee, back);
 
-
-    line1.setPrefSize(500, 250);
     root.setTop(line1);
     root.setCenter(line2);
     root.setBottom(line3);
