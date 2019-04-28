@@ -8,16 +8,19 @@ public class Employee implements Comparable<Employee> {
   private boolean scheduling;
   private boolean wiGrow;
   private int pointTask;
-  
+
   public Employee(String name, int id) {
     this.name = name;
     this.id = id;
   }
 
+  public Employee() {
+  }
+
   public String toString() {
     return String.format("%-40s %20d", this.name, this.id);
   }
-  
+
   public int compareTo(Employee other) {
     return 0;
   }
