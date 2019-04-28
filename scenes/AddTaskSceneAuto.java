@@ -26,7 +26,8 @@ public class AddTaskSceneAuto extends Scene {
     super(root, width, height);
     this.mainStage = mainStage;
     this.mainStage.setTitle("Today's Tasks");
-
+    
+    root.autosize();
     root.setPadding(new Insets(20));
 
     // Top Label
@@ -50,16 +51,13 @@ public class AddTaskSceneAuto extends Scene {
 
     Label fileName = new Label("input.json"); // TODO change to actual filename
 
-    // if (selectedFile != null) {
-    // mainStage.display(selectedFile);
-    // }
-
+    inputs.setAlignment(Pos.CENTER);
     inputs.getChildren().addAll(fileChooseButton, fileName);
-    inputs.setPadding(new Insets(200, 300, 100, 300));
     root.setCenter(inputs);
 
     // Bottom nav bar and buttons
-    HBox navBar = new HBox(10);
+    HBox navBar = new HBox(50);
+    navBar.setPadding(new Insets(0,50,0,0));
     Button addNewTask = new Button("Add New Task");
     addNewTask.setOnAction(e -> {
       Main.switchToAddTasksManual(this.mainStage);
@@ -68,6 +66,7 @@ public class AddTaskSceneAuto extends Scene {
     back.setOnAction(e -> {
       Main.switchToHome(this.mainStage);
     });
+    navBar.setAlignment(Pos.BOTTOM_RIGHT);
     navBar.getChildren().addAll(addNewTask, back);
     root.setBottom(navBar);
     // mainStage.show();

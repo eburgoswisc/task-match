@@ -13,7 +13,7 @@ public class Employee implements Comparable<Employee> {
     this.name = name;
     this.id = id;
   }
-  
+
   public String toString() {
     return String.format("%-40s %20d", this.name, this.id);
   }
