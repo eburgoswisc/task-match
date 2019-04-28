@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import javafx.application.Application;
@@ -24,6 +25,9 @@ public class Main extends Application {
   
   @Override
   public void start(Stage primaryStage) {
+    primaryStage.setOnCloseRequest(e -> {
+      
+    });
     try {
       BorderPane root = new BorderPane();
       currentScene = new HomeScene(primaryStage, root, 920, 600);
@@ -38,6 +42,7 @@ public class Main extends Application {
     try {
       BorderPane root = new BorderPane();
       currentScene = new OptionsScene(primaryStage, root, 630, 380);
+      //currentScene = new OptionsScene(primaryStage, root, 630, 380, curEmployee);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {

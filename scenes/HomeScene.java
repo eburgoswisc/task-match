@@ -6,9 +6,10 @@
 
 package scenes;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import application.Main;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -26,7 +27,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 import taskMatch.Employee;
 import javafx.scene.layout.BorderPane;
@@ -34,7 +37,7 @@ import javafx.scene.layout.BorderPane;
 public class HomeScene extends Scene {
 
   Stage mainStage;
-  protected static List<Employee> employeeAddedList;
+  protected static ArrayList<Employee> employeeAddedList;
   
   // sets new date formats for
   // time stamp in titleLabel
@@ -45,9 +48,9 @@ public class HomeScene extends Scene {
   public HomeScene(Stage mainStage, BorderPane root, int width, int height) {
     super(root, width, height);
 
+    employeeAddedList = new ArrayList<>();
     this.mainStage = mainStage;
     this.mainStage.setTitle("Home");
-    this.employeeAddedList = employeeAddedList;
     
     initTop(root);
     initCenter(root);
@@ -72,7 +75,7 @@ public class HomeScene extends Scene {
 
     Button addTasksButton = new Button("Add Tasks");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
-    addTasksButton.setOnAction(e ->{
+    addTasksButton.setOnAction(e -> {
       Main.switchToAddTasksAuto(this.mainStage);
     });
     
@@ -114,15 +117,10 @@ public class HomeScene extends Scene {
     // TODO: dynamically change employee list
     ListView<Employee> employeeList = new ListView<>();
 
-    ObservableList<Employee> items =
-        FXCollections.observableArrayList(
-            new Employee("John", 10001), 
-            new Employee("Paul", 10002), 
-            new Employee("George", 10003),
-            new Employee("Ringo", 100005)
-    );
-
-    //items.addAll(employeesAdded); TODO: uncomment when functionality is finished
+    ObservableList<Employee> items = FXCollections.observableArrayList();
+    if(!employeeAddedList.isEmpty()) {
+      items.addAll(employeeAddedList); //TODO: uncomment when functionality is finished
+    }
     
     employeeList.setItems(items);
     employeeList.setOnMouseClicked(e -> {
@@ -154,6 +152,20 @@ public class HomeScene extends Scene {
     generateReport.setOnAction(e -> {
       Main.switchToResults(this.mainStage);
     });
+    
+    FileChooser fileChooser = new FileChooser();
+    Button fileChooseButton = new Button("Load Data");
+    generateReport.setWrapText(true);
+    fileChooseButton.setText("Generate Report");
+    fileChooseButton.setStyle("-fx-font-size:20");
+    fileChooseButton.setMinWidth(200);
+    fileChooseButton.setMinHeight(100);
+    fileChooser.setTitle("Input File");
+
+    fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
+    fileChooseButton.setOnAction(e -> {
+      File selectedFile = fileChooser.showOpenDialog(mainStage);
+    });
 
     HBox logoPosition = new HBox(10);
     logoPosition.setAlignment(Pos.BOTTOM_RIGHT);
@@ -167,9 +179,9 @@ public class HomeScene extends Scene {
     imv.setSmooth(true);
     imv.setCache(true);
     
-    bottomControls.setSpacing(160);
+    bottomControls.setSpacing(40);
     logoPosition.getChildren().add(imv);
-    bottomControls.getChildren().addAll(generateReport, logoPosition);
+    bottomControls.getChildren().addAll(generateReport, fileChooseButton, logoPosition);
     root.setBottom(bottomControls);
   }
 }
