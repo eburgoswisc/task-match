@@ -10,13 +10,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import javax.tools.FileObject;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,9 +32,9 @@ import javafx.stage.Stage;
 import taskMatch.Employee;
 import taskMatch.JSONParser;
 import taskMatch.Task;
+
 /**
- * Scene that shows the report of tasks assign to employees.
- * Generates a file if desired.
+ * Scene that shows the report of tasks assign to employees. Generates a file if desired.
  * 
  * @author emanuelburgos
  *
@@ -43,167 +42,115 @@ import taskMatch.Task;
 public class ResultsScene extends Scene {
   // Main Stage
   Stage mainStage;
-  
+
   // Timestamp objects
-  private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss"); 
-  private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01 2019 14:02:13
-  
+  private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss");
+  private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01
+                                                                                 // 2019 14:02:13
+
   /**
-   * Constructor 
+   * Constructor
    * 
- * @param mainStage - Stage object
- * @param root - Borderpane object
- * @param width - int
- * @param height - int
- */
-public ResultsScene(Stage mainStage, BorderPane root, double width, double height) {
+   * @param mainStage - Stage object
+   * @param root      - Borderpane object
+   * @param width     - int
+   * @param height    - int
+   */
+  public ResultsScene(Stage mainStage, BorderPane root, double width, double height) {
     super(root, width, height);
     this.mainStage = mainStage;
     // Set property of scene
     this.mainStage.setTitle("Results");
-    
+
     // Initiate Boxes
     initTop(root);
     initCenter(root);
     initBottom(root);
-    
+
   }
-  
+
   /**
    * Initiate the top Box of the results page.
    * 
- * @param mainStage - Main Stage object
- */
-private void initBottom(BorderPane root) {
-	  // Make bottom box for buttons
-	  HBox bottomButtons = new HBox();
-	  bottomButtons.setPrefWidth(150);
-	  bottomButtons.setAlignment(Pos.CENTER);
-	  bottomButtons.setPadding(new Insets(0, 60, 50, 60)); 
-	  bottomButtons.setSpacing(50);
-	  
-	  // Get buttons
-	  Button backBut = new Button("Back");
-	  backBut.setOnAction(e ->{
-		  Main.switchToHome(this.mainStage);
-	  });
+   * @param mainStage - Main Stage object
+   */
+  private void initBottom(BorderPane root) {
+    // Make bottom box for buttons
+    HBox bottomButtons = new HBox();
+    bottomButtons.setPrefWidth(150);
+    bottomButtons.setAlignment(Pos.CENTER);
+    bottomButtons.setPadding(new Insets(0, 60, 50, 60));
+    bottomButtons.setSpacing(50);
 
-	  // Report button
-	  Button downReportBut = new Button("Download Report");
-	  downReportBut.setOnAction(e -> {
-		  downloadReport();;
-	  });
-	  // Add to HBox
-	  bottomButtons.getChildren().addAll(downReportBut, backBut);
-	  
-	  // Add to root
-	  root.setBottom(bottomButtons);
-	  root.setPadding(new Insets(20));
-	  
+    // Get buttons
+    Button backBut = new Button("Back");
+    backBut.setOnAction(e -> {
+      Main.switchToHome(this.mainStage);
+    });
+
+    // Report button
+    Button downReportBut = new Button("Download Report");
+    downReportBut.setOnAction(e -> {
+      downloadReport();;
+    });
+    // Add to HBox
+    bottomButtons.getChildren().addAll(downReportBut, backBut);
+
+    // Add to root
+    root.setBottom(bottomButtons);
+    root.setPadding(new Insets(20));
+
   }
 
-/**
- * Set Center panels
- * 
- * @param mainStage
- */
-private void initCenter(BorderPane root) {
-	// Make center box for reporting tasks
-	HBox reportBox = new HBox();
-	reportBox.setPadding(new Insets(0, 60, 50, 60));
-	// ListView Object
-	ListView<String> reportList = new ListView<>();
-	
-	// Task Report list
-	ObservableList<String> items =
-	        FXCollections.observableArrayList("[Task1]\n\t\t[employee1Name]\n\t\t[employee2Name]",
-	            "[Task2]\n\t\t[employee1Name]");
-	// Add to reportList
-	reportList.setItems(items);
-	
-	// Add stuff to box
-	reportBox.getChildren().addAll(reportList);
-	
-	// Add to root
-	root.setCenter(reportBox);
-}
+  /**
+   * Set Center panels
+   * 
+   * @param mainStage
+   */
+  private void initCenter(BorderPane root) {
+    // Make center box for reporting tasks
+    HBox reportBox = new HBox();
+    reportBox.setPadding(new Insets(0, 60, 50, 60));
+    // ListView Object
+    ListView<String> reportList = new ListView<>();
 
-private void initTop(BorderPane root) {
-	// Make HBox
-	HBox topBox = new HBox();
-	// Set Label
-	Label titleLabel = new Label(); // title label for top of UI
+    // Task Report list
+    ObservableList<String> items = FXCollections.observableArrayList(
+        "[Task1]\n\t\t[employee1Name]\n\t\t[employee2Name]", "[Task2]\n\t\t[employee1Name]");
+    // Add to reportList
+    reportList.setItems(items);
+
+    // Add stuff to box
+    reportBox.getChildren().addAll(reportList);
+
+    // Add to root
+    root.setCenter(reportBox);
+  }
+
+  private void initTop(BorderPane root) {
+    // Make HBox
+    HBox topBox = new HBox();
+    // Set Label
+    Label titleLabel = new Label(); // title label for top of UI
     titleLabel.setStyle("-fx-font-size:20");
-    titleLabel.setText("Fair Job Planning System " + date.format(new Date()) + " "
-        + clock.format(new Date()));
+    titleLabel.setText(
+        "Fair Job Planning System " + date.format(new Date()) + " " + clock.format(new Date()));
     titleLabel.setPadding(new Insets(20, 0, 20, 150));
-    
+
     // Add stuff to topBox
     topBox.getChildren().addAll(titleLabel);
     // Add to BorderPane root
     root.setTop(topBox);
-}
+  }
 
-/**
- * Method for generating report file
- * @throws JSONException 
- * 
- */
-private void downloadReport() {
-	
-	//Main.allEmployees;
-	// Main.allTasks;
-	// Get iterator for treemap
-	Set<Entry<String, Employee>> set = Main.allEmployees.entrySet();;
-	Iterator<Entry<String, Employee>> employeeIt = set.iterator(); 
-	
-	// Create JSONArray Objects
-	JSONArray employeesArray = new JSONArray();
-	JSONArray tasksArray = new JSONArray();
-	
-	// Name for output file: test_output.json
-	FileWriter f = null;
-	try {
-		f = new FileWriter("test_output.json");
-	} catch (IOException e) {
-		// Do Nothing
-	}
-	
-	// Place inside loop
-	try {
-	while (employeeIt.hasNext()) {
-		Entry<String, Employee> node = employeeIt.next();
-		Employee e = node.getValue();
-		JSONObject employee = new JSONObject();
-		employee.put("ID", e.getId());
-		employee.put("Name", e.getName());
-		employee.put("Exception Report", e.isExceptionReport());
-		employee.put("Scheduling", e.isScheduling());
-		employee.put("WIGrow", e.isWiGrow());
-		
-		// Add to JSON Array
-		employeesArray.put(employee);
-	}
-	
-	// Loop through Tasks and make JSONObjects
-	for (Task t: Main.allTasks) {
-		JSONObject tJson = new JSONObject();
-		tJson.put("ID", t.getID());
-		tJson.put("Description", t.getDescription());
-		tJson.put("Favorable", t.isFavorable());
-	}
-	} catch (JSONException e) {
-		// Do nothing
-	}
-	try {
-		// Write JSONArrays
-		f.write(employeesArray.toString());
-		f.write(tasksArray.toString());
-		
-		
-	} catch (IOException e) {
-		System.out.println("File already exists");
-	}
-}
+  /**
+   * Method for generating report file
+   * 
+   * @throws JSONException
+   * 
+   */
+  private void downloadReport() {
+
+  }
 
 }
