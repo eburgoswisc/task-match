@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.tools.FileObject;
-
+import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,11 +33,6 @@ import javafx.stage.Stage;
 import taskMatch.Employee;
 import taskMatch.JSONParser;
 import taskMatch.Task;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Scene that shows the report of tasks assign to employees.
  * Generates a file if desired.
