@@ -67,16 +67,16 @@ public class HomeScene extends Scene {
     VBox topButtons = new VBox(10);
     topButtons.setPrefWidth(150);
 
-    Button addEmployeesButton = new Button("Add Employees");
+    Button addEmployeesButton = new Button("Add New Employee");
     addEmployeesButton.setMinWidth(topButtons.getPrefWidth());
     addEmployeesButton.setOnAction(e -> {
-      Main.switchToAddEmployeesAuto(this.mainStage);
+      Main.switchToAddEmployeesManual(this.mainStage);
     });
 
-    Button addTasksButton = new Button("Add Tasks");
+    Button addTasksButton = new Button("Add New Task");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
     addTasksButton.setOnAction(e -> {
-      Main.switchToAddTasksAuto(this.mainStage);
+      Main.switchToAddTasksManual(this.mainStage);
     });
     
     Label titleLabel = new Label(); // title label for top of UI
@@ -156,7 +156,7 @@ public class HomeScene extends Scene {
     FileChooser fileChooser = new FileChooser();
     Button fileChooseButton = new Button("Load Data");
     generateReport.setWrapText(true);
-    fileChooseButton.setText("Generate Report");
+    fileChooseButton.setText("Load Data");
     fileChooseButton.setStyle("-fx-font-size:20");
     fileChooseButton.setMinWidth(200);
     fileChooseButton.setMinHeight(100);
@@ -181,7 +181,7 @@ public class HomeScene extends Scene {
     
     bottomControls.setSpacing(40);
     logoPosition.getChildren().add(imv);
-    bottomControls.getChildren().addAll(generateReport, fileChooseButton, logoPosition);
+    bottomControls.getChildren().addAll(fileChooseButton, generateReport, logoPosition);
     root.setBottom(bottomControls);
   }
 }

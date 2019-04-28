@@ -28,7 +28,7 @@ public class AddTaskSceneManual extends Scene {
     this.mainStage = mainStage;
     this.mainStage.setTitle("Add a New Task");
 
-    root.autosize();
+    //root.autosize();
     root.setPadding(new Insets(20));
 
     Label taskLabel = new Label("Task");
@@ -52,17 +52,17 @@ public class AddTaskSceneManual extends Scene {
 
     HBox inputs = new HBox(10); // All central inputs
     inputs.setAlignment(Pos.BASELINE_CENTER);
-    inputs.setPadding(new Insets(150, 0, 0, 0));
+    inputs.setPadding(new Insets(20, 0, 0, 0));
     inputs.getChildren().addAll(labels, textInputs);
 
     Button cancel = new Button("Cancel");
     cancel.setOnAction(e -> {
-      Main.switchToAddTasksAuto(this.mainStage);
+      Main.switchToHome(this.mainStage);
     });
 
     Button add = new Button("Add");
     add.setOnAction(e -> {
-      Main.switchToAddTasksAuto(this.mainStage);
+      Main.switchToHome(this.mainStage);
     });
 
     HBox navButtons = new HBox(30);
@@ -70,8 +70,8 @@ public class AddTaskSceneManual extends Scene {
     navButtons.setPadding(new Insets(20, 20, 100, 20));
     navButtons.getChildren().addAll(cancel, add);
 
-    root.setCenter(inputs);
-    root.setBottom(navButtons);
+    root.setTop(inputs);
+    root.setCenter(navButtons);
   }
 
 }
