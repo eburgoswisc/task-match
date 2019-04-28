@@ -4,7 +4,15 @@
 package scenes;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.tools.FileObject;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -21,7 +29,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import taskMatch.Employee;
+import taskMatch.JSONParser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Scene that shows the report of tasks assign to employees.
@@ -136,8 +149,40 @@ private void initTop(BorderPane root) {
 
 /**
  * Method for generating report file
+ * @throws JSONException 
  */
-private void downloadReport() {
+private void downloadReport() throws JSONException {
+	
+	//Main.allEmployees;
+	// Main.allTasks;
+	// Get iterator for treemap
+	Set<Entry<String, Employee>> set = Main.allEmployees.entrySet();;
+	Iterator<Entry<String, Employee>> employeeIt = set.iterator(); 
+	
+	// Create JSONArray Objects
+	JSONArray employeesArray = new JSONArray();
+	JSONArray tasksArray = new JSONArray();
+	
+	// Name for output file: test_output.json
+	File output = new File("test_output.json");
+	
+	// Place inside loop
+	while (employeeIt.hasNext()) {
+		Entry<String, Employee> node = employeeIt.next();
+		Employee e = node.getValue();
+		JSONObject employee = new JSONObject();
+		employee.put("ID", e.getId());
+		employee.put("Name", e.getName());
+		employee.put("Exception Report", e.isExceptionReport());
+		employee.put("Scheduling", e.isScheduling());
+		employee.put("WIGrow", e.isWiGrow());
+		
+		// Add to JSON Array
+		employeesArray.put(employee);
+	}
+	
+	// Loop through Tasks and make JSONObjects
+	
 	// Create file object
 	File f = new File("report.json");
 	try {
