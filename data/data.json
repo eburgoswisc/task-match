@@ -1,1 +1,32 @@
-Hello
+{
+   "employees":[
+      {
+         "ID":907000023,
+         "Name":"John",
+         "Exception Report":false,
+         "Scheduling":false,
+         "WIGrow":false,
+         "Points":5
+      },
+      {
+         "ID":907000035,
+         "Name":"Paul",
+         "Exception Report":true,
+         "Scheduling":false,
+         "WIGrow":true,
+         "Points":-3
+      },
+   ],
+   "tasks":[
+      {
+         "ID":1,
+         "Description":"Bathroom cleaning",
+         "Favorable":true
+      },
+      {
+         "ID":2,
+         "Description":"Vacuuming",
+         "Favorable":false
+      },
+   ]
+}
