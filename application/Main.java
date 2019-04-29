@@ -84,7 +84,7 @@ public class Main extends Application {
   public static void switchToAddEmployeesAuto(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 330, 150);
+      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 500, 150);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {

@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -100,8 +101,48 @@ public class JSONFileParser {
     }
   }
 
+  public static void write(String jsonFilePath) {
+    JSONObject doc = new JSONObject();
+    JSONArray employeesArray = new JSONArray();
+    JSONArray tasksArray = new JSONArray();
+    
+    ArrayList<Employee> allEmployees = Main.getAllEmployees();
+    allEmployees.addAll(Main.getEmployeesInUnit()); //done because employees in unit do not show up in allEmployees
+    
+    for(Employee e : allEmployees) {
+      JSONObject curEmployee = new JSONObject();
+      curEmployee.put("ID", e.getId());
+      curEmployee.put("Name", e.getName());
+      curEmployee.put("Exception Report", e.isExceptionReport());
+      curEmployee.put("Scheduling", e.isScheduling());
+      curEmployee.put("WIGrow", e.isWiGrow());
+      curEmployee.put("Points", e.getPointTask());
+      employeesArray.add(curEmployee);
+    }
+    doc.put("employees", employeesArray);
+    
+    for(Task t : Main.getAllTasks()) {
+      JSONObject curTask = new JSONObject();
+      curTask.put("ID", t.getID());
+      curTask.put("Description", t.getDescription());
+      curTask.put("Favorable", t.isFavorable());
+      tasksArray.add(curTask);
+    }
+    doc.put("tasks", tasksArray);
+    
+    try (FileWriter file = new FileWriter(jsonFilePath)) {
+      file.write(doc.toJSONString());
+      file.flush();
+    } 
+    catch (IOException e) {
+      e.printStackTrace();
+      JSONFileParser.write(jsonFilePath);
+    }
+  }
+  
   public static void writeData(String jsonFilepath) {
     // Create JSONArray Objects
+    JSONObject doc = new JSONObject();
     JSONArray employeesArray = new JSONArray();
     JSONArray tasksArray = new JSONArray();
 
@@ -110,6 +151,7 @@ public class JSONFileParser {
     try {
       f = new FileWriter(jsonFilepath);
     } catch (IOException e) {
+      e.printStackTrace();
       // Do Nothing
     }
 
@@ -135,15 +177,17 @@ public class JSONFileParser {
         tJson.put("Favorable", t.isFavorable());
       }
     } catch (Exception e) {
+      e.printStackTrace();
       // Do nothing
     }
     try {
       // Write JSONArrays
-      f.write(employeesArray.toString());
-      f.write(tasksArray.toString());
-
+      doc.put("employess", employeesArray);
+      doc.put("tasks", tasksArray);
+      f.write(doc.toJSONString());
 
     } catch (IOException e) {
+      e.printStackTrace();
       System.out.println("File already exists");
     }
   }

@@ -151,7 +151,7 @@ public class HomeScene extends Scene {
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
       Main.switchToResults(this.mainStage);
-      JSONFileParser.writeData(Main.getCurFileOpen());
+      JSONFileParser.write(Main.getCurFileOpen());
     });
     
     FileChooser fileChooser = new FileChooser();
