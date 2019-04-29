@@ -11,6 +11,7 @@ import scenes.AddTaskSceneAuto;
 import scenes.AddTaskSceneManual;
 import scenes.HomeScene;
 import taskMatch.Employee;
+import taskMatch.JSONFileParser;
 import taskMatch.Task;
 import scenes.OptionsScene;
 import scenes.ResultsScene;
@@ -23,11 +24,16 @@ public class Main extends Application {
   private static ArrayList<Employee> allEmployees;
   private static ArrayList<Employee> employeesInUnit;
   private static ArrayList<Task> allTasks;
-
+  private static String curFileOpen;
+  
   @Override
   public void start(Stage primaryStage) {
+    curFileOpen = "";
+    allTasks = new ArrayList<>();
+    allEmployees = new ArrayList<>();
+    employeesInUnit = new ArrayList<>();
     primaryStage.setOnCloseRequest(e -> {
-      
+      //JSONFileParser.writeData(curFileOpen);
     });
     try {
       BorderPane root = new BorderPane();
@@ -39,10 +45,10 @@ public class Main extends Application {
     }
   }
 
-  public static void switchToOptions(Stage primaryStage) {
+  public static void switchToOptions(Stage primaryStage, Employee curEmployee) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new OptionsScene(primaryStage, root, 630, 380);
+      currentScene = new OptionsScene(primaryStage, root, 630, 380, curEmployee);
       //currentScene = new OptionsScene(primaryStage, root, 630, 380, curEmployee);
       primaryStage.setScene(currentScene);
       primaryStage.show();
@@ -134,4 +140,7 @@ public class Main extends Application {
     return allTasks;
   }
 
+  public static void setCurFileOpen(String curFileOpen) {
+    Main.curFileOpen = curFileOpen;
+  }
 }

@@ -26,12 +26,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import taskMatch.Employee;
 import javafx.scene.layout.BorderPane;
 
 public class OptionsScene extends Scene {
 
   Stage mainStage;
-
+  Employee curEmployee;
+  
   // sets new date formats for time stamp in titleLabel in 24 hour format
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss");
   private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01
@@ -45,9 +47,10 @@ public class OptionsScene extends Scene {
    * @param width - The desired width of the scene window
    * @param height - The desired height of the scene window
    */
-  public OptionsScene(Stage mainStage, BorderPane root, double width, double height) {
+  public OptionsScene(Stage mainStage, BorderPane root, double width, double height, Employee curEmployee) {
 
     super(root, width, height);
+    this.curEmployee = curEmployee;
     this.mainStage = mainStage;
     this.mainStage.setTitle("Employee Options");
 
@@ -85,7 +88,7 @@ public class OptionsScene extends Scene {
     timeline.play();
 
     Label employeeInfoLabel = new Label();
-    employeeInfoLabel.setText("[employeeName]       [employeeID]");
+    employeeInfoLabel.setText(curEmployee.toString());
     employeeInfoLabel.setStyle("-fx-font-size:15");
     employeeInfoLabel.setPadding(new Insets (-10, 0, 0, 0));
     // TODO display the employeeName and employeeID for selected employee

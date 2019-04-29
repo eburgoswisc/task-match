@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import taskMatch.Employee;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AddEmployeeSceneAuto extends Scene {
@@ -54,10 +55,19 @@ public class AddEmployeeSceneAuto extends Scene {
       Main.switchToHome(this.mainStage);
     });
 
-    ObservableList<String> employees = FXCollections.observableArrayList("employee1", "employee2",
-        "employee3", "employee4", "employee5");
-    ComboBox comboBox = new ComboBox(employees); // create a combo box object
-
+    ObservableList<Employee> employees = FXCollections.observableArrayList();
+    employees.addAll(Main.getAllEmployees());
+    ComboBox<Employee> comboBox = new ComboBox<Employee>(); // create a combo box object
+    comboBox.setItems(employees);
+    
+    addToUnit.setOnAction(e -> {
+      Main.getEmployeesInUnit().add(comboBox.getSelectionModel().getSelectedItem());
+      Main.getAllEmployees().remove(comboBox.getSelectionModel().getSelectedItem());
+      employees.clear();
+      employees.addAll(Main.getAllEmployees());
+      comboBox.setItems(employees);
+    });
+    
     HBox line1 = new HBox(10);
     HBox line2 = new HBox(10);
     HBox line3 = new HBox(100);

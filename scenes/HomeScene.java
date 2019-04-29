@@ -7,6 +7,7 @@
 package scenes;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 import taskMatch.Employee;
+import taskMatch.JSONFileParser;
 import javafx.scene.layout.BorderPane;
 
 public class HomeScene extends Scene {
@@ -123,7 +125,7 @@ public class HomeScene extends Scene {
     employeeList.setItems(items);
     employeeList.setOnMouseClicked(e -> {
       if(employeeList.getSelectionModel().getSelectedItem() instanceof Employee) {
-        Main.switchToOptions(this.mainStage); 
+        Main.switchToOptions(this.mainStage, employeeList.getSelectionModel().getSelectedItem()); 
       }
     });
     
@@ -163,6 +165,14 @@ public class HomeScene extends Scene {
     fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
     fileChooseButton.setOnAction(e -> {
       File selectedFile = fileChooser.showOpenDialog(mainStage);
+      
+      try {
+        JSONFileParser.readData(selectedFile.getAbsolutePath());
+      } catch (FileNotFoundException e1) {
+        //won't happen
+      }
+      
+      Main.setCurFileOpen(selectedFile.getAbsolutePath());
     });
 
     HBox logoPosition = new HBox(10);

@@ -9,7 +9,10 @@ package taskMatch;
  */
 public class Employee implements Comparable<Employee> {
 
+<<<<<<< Updated upstream
   // Private fields for employee object
+=======
+>>>>>>> Stashed changes
   private long id;
   private String name;
   private boolean exceptionReport;
@@ -17,7 +20,7 @@ public class Employee implements Comparable<Employee> {
   private boolean wiGrow;
   private int pointTask; // To be implemented in future update
 
-  public Employee(String name, int id) {
+  public Employee(String name, long id) {
     this.name = name;
     this.id = id;
   }
@@ -30,6 +33,7 @@ public class Employee implements Comparable<Employee> {
     return String.format("%-40s %20d", this.name, this.id);
   }
 
+<<<<<<< Updated upstream
   /**
    * Necessary method for the comparable interface
    */
@@ -43,16 +47,26 @@ public class Employee implements Comparable<Employee> {
    * 
    * @return ID number
    */
+=======
+  public int compareTo(Employee other) {
+    return 0;
+  }
+
+>>>>>>> Stashed changes
   public long getId() {
     return id;
   }
 
+<<<<<<< Updated upstream
   /**
    * Setter method for employee ID number field
    * 
    * @param ID number
    */
   public void setId(int id) {
+=======
+  public void setId(long id) {
+>>>>>>> Stashed changes
     this.id = id;
   }
 
