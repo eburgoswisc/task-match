@@ -61,11 +61,13 @@ public class AddEmployeeSceneAuto extends Scene {
     comboBox.setItems(employees);
     
     addToUnit.setOnAction(e -> {
-      Main.getEmployeesInUnit().add(comboBox.getSelectionModel().getSelectedItem());
-      Main.getAllEmployees().remove(comboBox.getSelectionModel().getSelectedItem());
-      employees.clear();
-      employees.addAll(Main.getAllEmployees());
-      comboBox.setItems(employees);
+      if(comboBox.getSelectionModel().getSelectedItem() instanceof Employee) {
+        Main.getEmployeesInUnit().add(comboBox.getSelectionModel().getSelectedItem());
+        Main.getAllEmployees().remove(comboBox.getSelectionModel().getSelectedItem());
+        employees.clear();
+        employees.addAll(Main.getAllEmployees());
+        comboBox.setItems(employees);
+      }
     });
     
     HBox line1 = new HBox(10);
@@ -74,7 +76,7 @@ public class AddEmployeeSceneAuto extends Scene {
 
     line1.setPadding(new Insets(0, 0, 30, 0));
     
-    line1.getChildren().addAll(inputFile, new Label("data.json"));
+    line1.getChildren().addAll(inputFile, new Label(Main.getCurFileOpenName()));
 
     line2.getChildren().addAll(comboBox, addToUnit);
 

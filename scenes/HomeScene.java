@@ -151,6 +151,7 @@ public class HomeScene extends Scene {
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
       Main.switchToResults(this.mainStage);
+      JSONFileParser.writeData(Main.getCurFileOpen());
     });
     
     FileChooser fileChooser = new FileChooser();
@@ -173,6 +174,7 @@ public class HomeScene extends Scene {
       }
       
       Main.setCurFileOpen(selectedFile.getAbsolutePath());
+      Main.setCurFileOpenName(selectedFile.getName());
     });
 
     HBox logoPosition = new HBox(10);

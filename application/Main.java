@@ -24,11 +24,13 @@ public class Main extends Application {
   private static ArrayList<Employee> allEmployees;
   private static ArrayList<Employee> employeesInUnit;
   private static ArrayList<Task> allTasks;
-  private static String curFileOpen;
+  private static String curFileOpenPath;
+  private static String curFileOpenName;
   
   @Override
   public void start(Stage primaryStage) {
-    curFileOpen = "";
+    curFileOpenPath = "";
+    setCurFileOpenName("");
     allTasks = new ArrayList<>();
     allEmployees = new ArrayList<>();
     employeesInUnit = new ArrayList<>();
@@ -141,6 +143,18 @@ public class Main extends Application {
   }
 
   public static void setCurFileOpen(String curFileOpen) {
-    Main.curFileOpen = curFileOpen;
+    Main.curFileOpenPath = curFileOpen;
+  }
+  
+  public static String getCurFileOpen() {
+    return curFileOpenPath;
+  }
+
+  public static String getCurFileOpenName() {
+    return curFileOpenName;
+  }
+
+  public static void setCurFileOpenName(String curFileOpenName) {
+    Main.curFileOpenName = curFileOpenName;
   }
 }
