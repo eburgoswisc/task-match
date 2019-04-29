@@ -37,7 +37,6 @@ import javafx.scene.layout.BorderPane;
 public class HomeScene extends Scene {
 
   Stage mainStage;
-  protected static ArrayList<Employee> employeeAddedList;
   
   // sets new date formats for
   // time stamp in titleLabel
@@ -47,8 +46,7 @@ public class HomeScene extends Scene {
   
   public HomeScene(Stage mainStage, BorderPane root, int width, int height) {
     super(root, width, height);
-
-    employeeAddedList = new ArrayList<>();
+    
     this.mainStage = mainStage;
     this.mainStage.setTitle("Home");
     
@@ -118,8 +116,8 @@ public class HomeScene extends Scene {
     ListView<Employee> employeeList = new ListView<>();
 
     ObservableList<Employee> items = FXCollections.observableArrayList();
-    if(!employeeAddedList.isEmpty()) {
-      items.addAll(employeeAddedList); //TODO: uncomment when functionality is finished
+    if(!Main.getEmployeesInUnit().isEmpty()) {
+      items.addAll(Main.getEmployeesInUnit()); //TODO: uncomment when functionality is finished
     }
     
     employeeList.setItems(items);
