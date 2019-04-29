@@ -20,9 +20,10 @@ import javafx.scene.layout.BorderPane;
 public class Main extends Application {
   
   private static Scene currentScene;
-  public static TreeMap<String, Employee> allEmployees;
-  public static List<Task> allTasks;
-  
+  private static ArrayList<Employee> allEmployees;
+  private static ArrayList<Employee> employeesInUnit;
+  private static ArrayList<Task> allTasks;
+
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setOnCloseRequest(e -> {
@@ -119,4 +120,18 @@ public class Main extends Application {
   public static void main(String[] args) {
     launch(args);
   }
+  
+  
+  public static ArrayList<Employee> getAllEmployees() {
+    return allEmployees;
+  }
+
+  public static ArrayList<Employee> getEmployeesInUnit() {
+    return employeesInUnit;
+  }
+
+  public static ArrayList<Task> getAllTasks() {
+    return allTasks;
+  }
+
 }
