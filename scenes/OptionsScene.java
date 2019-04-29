@@ -23,16 +23,26 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import taskMatch.Employee;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 
 public class OptionsScene extends Scene {
 
   Stage mainStage;
   Employee curEmployee;
+  
+  private ChoiceBox<String> cb1;
+  private ChoiceBox<String> cb2;
+  private ChoiceBox<String> cb3;
   
   // sets new date formats for time stamp in titleLabel in 24 hour format
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss");
@@ -69,7 +79,9 @@ public class OptionsScene extends Scene {
   private void initTop(BorderPane root) {
 
     // One HBox holds the label elements in the VBox
-    HBox topControl = new HBox(10);
+    
+    HBox specificEmployee = new HBox(10);
+    HBox mainHBox = new HBox(10);
     VBox topLabel = new VBox(40);
 
     // Program title label instantiation and settings
@@ -89,20 +101,31 @@ public class OptionsScene extends Scene {
 
     Label employeeInfoLabel = new Label();
     employeeInfoLabel.setText(curEmployee.toString());
-    employeeInfoLabel.setStyle("-fx-font-size:15");
-    employeeInfoLabel.setPadding(new Insets (-10, 0, 0, 0));
-    // TODO display the employeeName and employeeID for selected employee
+    employeeInfoLabel.setFont(new Font(15));
+    employeeInfoLabel.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));
 
+    Button remove = new Button();
+    remove.setText("Remove from unit");
+    remove.setOnAction(e -> {
+      
+      Main.getEmployeesInUnit().remove(curEmployee);
+      Main.getAllEmployees().add(curEmployee);
+      
+      Main.switchToHome(this.mainStage);
+      });
+    
     // Heading label instantiation and settings
     Label headingLabel = new Label();
     headingLabel.setText("Employee options: ");
     headingLabel.setStyle("-fx-font-size:20");
     headingLabel.setPadding(new Insets (-20, 0, 5, 0));
 
-    topLabel.getChildren().addAll(titleLabel, employeeInfoLabel, headingLabel);
-    topControl.getChildren().addAll(topLabel);
+    specificEmployee.getChildren().addAll(employeeInfoLabel, remove);
+    specificEmployee.setSpacing(20);
+    topLabel.getChildren().addAll(titleLabel, specificEmployee, headingLabel);
+    mainHBox.getChildren().addAll(topLabel);
 
-    root.setTop(topControl);
+    root.setTop(mainHBox);
     root.setPadding(new Insets(20));
   }
 
@@ -135,18 +158,59 @@ public class OptionsScene extends Scene {
     scheduling.setFont(labelFont);
     wigrow.setFont(labelFont);
 
+    
     // ChoiceBoxes for each of the three options
-    ChoiceBox cb1 = new ChoiceBox(FXCollections.observableArrayList("No", new Separator(), "Yes"));
-    cb1.getSelectionModel().selectFirst();
+    cb1 = new ChoiceBox<String>();
+    cb1.getItems().addAll("No","Yes");
     cb1.setStyle("-fx-font-size:15");
-
-    ChoiceBox cb2 = new ChoiceBox(FXCollections.observableArrayList("No", new Separator(), "Yes"));
-    cb2.getSelectionModel().selectFirst();
+    
+    if (curEmployee.isExceptionReport()) {
+      cb1.getSelectionModel().selectLast();
+    }
+    else {
+      cb1.getSelectionModel().selectFirst();
+    }
+    
+    cb2 = new ChoiceBox<String>();
+    cb2.getItems().addAll("No","Yes");
     cb2.setStyle("-fx-font-size:15");
-
-    ChoiceBox cb3 = new ChoiceBox(FXCollections.observableArrayList("No", new Separator(), "Yes"));
-    cb3.getSelectionModel().selectFirst();
+    
+    if (curEmployee.isScheduling()) {
+      cb2.getSelectionModel().selectLast();
+    }
+    else {
+      cb2.getSelectionModel().selectFirst();
+    }
+    
+    cb3 = new ChoiceBox<String>();
+    cb3.getItems().addAll("No", "Yes");
     cb3.setStyle("-fx-font-size:15");
+    
+    if (curEmployee.isWiGrow()) {
+      cb3.getSelectionModel().selectLast();
+    }
+    else {
+      cb3.getSelectionModel().selectFirst();
+    }
+    
+    if (cb1.getSelectionModel().getSelectedIndex() == 0) {
+      curEmployee.setExceptionReport(false);
+    }
+    if (cb1.getSelectionModel().getSelectedIndex() == 1) {
+      curEmployee.setExceptionReport(true);
+    }
+    if (cb2.getSelectionModel().getSelectedIndex() == 0) {
+      curEmployee.setScheduling(false);
+    }
+    if (cb2.getSelectionModel().getSelectedIndex() == 1) {
+      curEmployee.setScheduling(true);
+    }
+    if (cb1.getSelectionModel().getSelectedIndex() == 0) {
+      curEmployee.setWiGrow(false);
+    }
+    if (cb1.getSelectionModel().getSelectedIndex() == 1) {
+      curEmployee.setWiGrow(true);
+    }
 
     // Set elements in the HBox and two VBoxes, and set the BorderPane center panel with HBox
     midObjects.getChildren().addAll(midChoices, midCBs); // HBox
@@ -178,6 +242,26 @@ public class OptionsScene extends Scene {
     backButton.setMinHeight(50);
     
     backButton.setOnAction(e -> {
+      
+      if (cb1.getSelectionModel().getSelectedIndex() == 0) {
+        curEmployee.setExceptionReport(false);
+      }
+      if (cb1.getSelectionModel().getSelectedIndex() == 1) {
+        curEmployee.setExceptionReport(true);
+      }
+      if (cb2.getSelectionModel().getSelectedIndex() == 0) {
+        curEmployee.setScheduling(false);
+      }
+      if (cb2.getSelectionModel().getSelectedIndex() == 1) {
+        curEmployee.setScheduling(true);
+      }
+      if (cb1.getSelectionModel().getSelectedIndex() == 0) {
+        curEmployee.setWiGrow(false);
+      }
+      if (cb1.getSelectionModel().getSelectedIndex() == 1) {
+        curEmployee.setWiGrow(true);
+      }
+
       Main.switchToHome(this.mainStage);
       });
 
