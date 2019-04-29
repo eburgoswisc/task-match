@@ -2,41 +2,63 @@ package taskMatch;
 
 import java.util.ArrayList;
 
+/**
+ * Class to store information for each task object that is loaded into program
+ * 
+ * @author CS400 aTeam7
+ *
+ */
 public class Task {
-  private int ID;
+
+  // Private fields for task object
+  private int ID; // ID is not the same as Employee ID
   private String description;
   private boolean favorable;
   private ArrayList<Employee> employees;
   private boolean assigned;
 
-  Task(String description, boolean favorable) {
+  /**
+   * Constructor for creating a new task object
+   * 
+   * @param description Name of task
+   * @param favorable Whether task is favorable or not
+   */
+  public Task(String description, boolean favorable) {
     this.description = description;
     this.favorable = favorable;
     this.employees = new ArrayList<Employee>();
   }
 
   /**
-   * @return the iD
+   * Getter method for task ID
+   * 
+   * @return the ID
    */
   public int getID() {
     return ID;
   }
 
   /**
-   * @param iD the iD to set
+   * Setter method for task ID
+   * 
+   * @param the ID to set
    */
   public void setID(int iD) {
     ID = iD;
   }
 
   /**
-   * @return the description
+   * Getter method for task description
+   * 
+   * @return the name of the task
    */
   public String getDescription() {
     return description;
   }
 
   /**
+   * Setter method for task ID
+   * 
    * @param description the description to set
    */
   public void setDescription(String description) {
@@ -44,27 +66,35 @@ public class Task {
   }
 
   /**
-   * @return the favorable
+   * Getter method for favorable boolean
+   * 
+   * @return if task is favorable or not
    */
   public boolean isFavorable() {
     return favorable;
   }
 
   /**
-   * @param favorable the favorable to set
+   * Setter method for favorable boolean
+   * 
+   * @param boolean if task is favorable or not
    */
   public void setFavorable(boolean favorable) {
     this.favorable = favorable;
   }
 
   /**
-   * @return the employees
+   * Getter method for the list of employees who will complete this task
+   * 
+   * @return the list of employees assigned this task
    */
   public ArrayList<Employee> getEmployees() {
     return employees;
   }
 
   /**
+   * Setter method for the list of employees who will complete this task
+   * 
    * @param employees the employees to set
    */
   public void setEmployees(ArrayList<Employee> employees) {
@@ -72,14 +102,18 @@ public class Task {
   }
 
   /**
-   * @return the assigned
+   * Getter method for if this task has been assigned yet
+   * 
+   * @return boolean if assigned
    */
   public boolean isAssigned() {
     return assigned;
   }
 
   /**
-   * @param assigned the assigned to set
+   * Setter method for if this task has been assigned yet
+   * 
+   * @param boolean if assigned
    */
   public void setAssigned(boolean assigned) {
     this.assigned = assigned;
