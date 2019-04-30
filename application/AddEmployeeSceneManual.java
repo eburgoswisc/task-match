@@ -65,16 +65,15 @@ public class AddEmployeeSceneManual extends Scene {
     Button add = new Button("Add");
     add.setOnAction(e -> {
       // Get values entered
-      boolean exceptionChoice = Boolean.parseBoolean((String) exceptionCB.getValue());
-      boolean schedulingChoice = Boolean.parseBoolean((String) schedulingCB.getValue());
-      boolean wigrowChoice = Boolean.parseBoolean((String) wigrowCB.getValue());
+      boolean exceptionChoice = getBooleanFromCB((String) exceptionCB.getValue());
+      boolean schedulingChoice = getBooleanFromCB((String) schedulingCB.getValue());
+      boolean wigrowChoice = getBooleanFromCB((String) wigrowCB.getValue());
       long idEntered = Long.parseLong(idText.getText());
 
       Employee newEmployee = new Employee(nameText.getText(), idEntered, exceptionChoice,
           schedulingChoice, wigrowChoice);
 
       Main.getAllEmployees().add(newEmployee);
-      Main.getEmployeesInUnit().add(newEmployee);
 
       Main.switchToAddEmployeesAuto(this.mainStage);
     });
@@ -102,5 +101,13 @@ public class AddEmployeeSceneManual extends Scene {
 
     root.setCenter(all);
 
+  }
+
+  private boolean getBooleanFromCB(String choice) {
+    if (choice.equalsIgnoreCase("Yes")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
