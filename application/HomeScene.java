@@ -1,7 +1,7 @@
 /**
- * Author: Adam Jackson
- * 
- * This scene is the main options scene where the program first opens up.
+ * This is the main scene for the program. It is this scene that is first
+ * viewed when the program first opens, and it's also from herer that a 
+ * majority of the program is controlled.
  */
 
 package application;
@@ -60,17 +60,19 @@ public class HomeScene extends Scene {
    * @param root is the BorderPane to modify
    */
   private void initTop(BorderPane root) {
-    HBox topControl = new HBox(10);
+    HBox topControl = new HBox(10); //holds all the elements for the top part of the Scene
 
-    VBox topButtons = new VBox(10);
+    VBox topButtons = new VBox(10); //holds all the buttons in the top part of the Scene
     topButtons.setPrefWidth(150);
 
+    //Changes the scene to allow user to add employees to the unit
     Button addEmployeesButton = new Button("Choose Employees");
     addEmployeesButton.setMinWidth(topButtons.getPrefWidth());
     addEmployeesButton.setOnAction(e -> {
       Main.switchToAddEmployeesAuto(this.mainStage);
     });
 
+    //Changes the scene to allow users to add new, non-existing tasks
     Button addTasksButton = new Button("Add New Task");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
     addTasksButton.setOnAction(e -> {
@@ -154,16 +156,18 @@ public class HomeScene extends Scene {
       JSONFileParser.write(Main.getCurFileOpen()); //TODO fix this. this is where the exception is generated. 
     });
 
-    FileChooser fileChooser = new FileChooser();
+
     Button fileChooseButton = new Button("Load Data");
-    generateReport.setWrapText(true);
+    fileChooseButton.setWrapText(true);
     fileChooseButton.setText("Load Data");
     fileChooseButton.setStyle("-fx-font-size:20");
     fileChooseButton.setMinWidth(200);
     fileChooseButton.setMinHeight(100);
+    
+    FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Input File");
-
     fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
+    
     fileChooseButton.setOnAction(e -> {
       File selectedFile = fileChooser.showOpenDialog(mainStage);
 
