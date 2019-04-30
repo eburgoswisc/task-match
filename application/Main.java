@@ -1,22 +1,10 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
 import javafx.application.Application;
-import javafx.stage.Stage;
-import scenes.AddEmployeeSceneAuto;
-import scenes.AddEmployeeSceneManual;
-import scenes.AddTaskSceneAuto;
-import scenes.AddTaskSceneManual;
-import scenes.HomeScene;
-import taskMatch.Employee;
-import taskMatch.JSONFileParser;
-import taskMatch.Task;
-import scenes.OptionsScene;
-import scenes.ResultsScene;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class Main extends Application {
   

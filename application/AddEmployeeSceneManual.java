@@ -1,13 +1,11 @@
 /**
  * TODO: Akovi
  */
-package scenes;
+package application;
 
-import application.Main;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;

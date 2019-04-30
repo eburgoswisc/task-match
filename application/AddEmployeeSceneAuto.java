@@ -1,24 +1,18 @@
 /**
  * TODO: Akovi
  */
-package scenes;
+package application;
 
-import java.io.File;
-import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import taskMatch.Employee;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AddEmployeeSceneAuto extends Scene {
 

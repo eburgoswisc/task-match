@@ -1,27 +1,14 @@
 /**
  * Author: Emanuel Burgos
  */
-package scenes;
+package application;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Set;
-import javax.tools.FileObject;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,9 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import taskMatch.Employee;
-import taskMatch.JSONParser;
-import taskMatch.Task;
+//import taskMatch.JSONParser;
 
 /**
  * Scene that shows the report of tasks assign to employees. Generates a file if desired.

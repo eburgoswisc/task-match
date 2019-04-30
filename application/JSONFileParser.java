@@ -1,4 +1,4 @@
-package taskMatch;
+package application;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import application.Main;
 
 @SuppressWarnings("unchecked")
 public class JSONFileParser {
