@@ -22,6 +22,15 @@ public class Employee implements Comparable<Employee> {
     this.id = id;
   }
 
+  public Employee(String name, long id, boolean exceptionReport, boolean scheduling,
+      boolean wiGrow) {
+    this.name = name;
+    this.id = id;
+    this.exceptionReport = exceptionReport;
+    this.scheduling = scheduling;
+    this.wiGrow = wiGrow;
+  }
+
   /**
    * This class returns the employee's name and ID number in a string
    */
@@ -33,10 +42,10 @@ public class Employee implements Comparable<Employee> {
   /**
    * Necessary method for the comparable interface
    */
-   @Override
-   public int compareTo(Employee other) {
-   return 0;
-   }
+  @Override
+  public int compareTo(Employee other) {
+    return 0;
+  }
 
   /**
    * Getter method for employee ID number
@@ -120,7 +129,7 @@ public class Employee implements Comparable<Employee> {
   }
 
   /**
-   * Setter mehod for the employee WiGrow conversation field
+   * Setter method for the employee WiGrow conversation field
    * 
    * @param wiGrow (true or false)
    */
@@ -129,20 +138,22 @@ public class Employee implements Comparable<Employee> {
   }
 
   // Points system to be implemented in future update
-   /**
+  /**
    * Getter method for employee points field
+   * 
    * @param points (integer)
    */
-   public int getPointTask() {
-   return pointTask;
-   }
-  
-   /**
+  public int getPointTask() {
+    return pointTask;
+  }
+
+  /**
    * Setter method for employee points field
+   * 
    * @param points (integer)
    */
-   public void setPointTask(int pointTask) {
-   this.pointTask = pointTask;
-   }
+  public void setPointTask(int pointTask) {
+    this.pointTask = pointTask;
+  }
 
 }
