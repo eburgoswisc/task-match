@@ -135,7 +135,7 @@ public class JSONFileParser {
     } 
     catch (IOException e) {
       e.printStackTrace();
-      JSONFileParser.write(jsonFilePath);
+      //JSONFileParser.write(jsonFilePath); //TODO Throws exceptions continuously when you hit generate report without loading a json file
     }
   }
   

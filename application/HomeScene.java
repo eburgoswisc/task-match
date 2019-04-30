@@ -151,7 +151,7 @@ public class HomeScene extends Scene {
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
       Main.switchToResults(this.mainStage);
-      JSONFileParser.write(Main.getCurFileOpen());
+      JSONFileParser.write(Main.getCurFileOpen()); //TODO fix this. this is where the exception is generated. 
     });
 
     FileChooser fileChooser = new FileChooser();
