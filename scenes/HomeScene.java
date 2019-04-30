@@ -1,5 +1,5 @@
 /**
- * Author: Adam Jackson 
+ * Author: Adam Jackson
  * 
  * This scene is the main options scene where the program first opens up.
  */
@@ -39,26 +39,28 @@ import javafx.scene.layout.BorderPane;
 public class HomeScene extends Scene {
 
   Stage mainStage;
-  
+
   // sets new date formats for
   // time stamp in titleLabel
   // in 24 hour format
-  private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss"); 
-  private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01 2019 14:02:13
-  
+  private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss");
+  private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01
+                                                                                 // 2019 14:02:13
+
   public HomeScene(Stage mainStage, BorderPane root, int width, int height) {
     super(root, width, height);
-    
+
     this.mainStage = mainStage;
     this.mainStage.setTitle("Home");
-    
+
     initTop(root);
     initCenter(root);
     initBottom(root);
   }
-  
+
   /**
    * private method initializes top element of BorderPane
+   * 
    * @param root is the BorderPane to modify
    */
   private void initTop(BorderPane root) {
@@ -78,19 +80,19 @@ public class HomeScene extends Scene {
     addTasksButton.setOnAction(e -> {
       Main.switchToAddTasksManual(this.mainStage);
     });
-    
+
     Label titleLabel = new Label(); // title label for top of UI
     titleLabel.setStyle("-fx-font-size:20");
     titleLabel.setText("Fair Job Planning System            " + date.format(new Date()) + " "
         + clock.format(new Date()));
     titleLabel.setPadding(new Insets(20, 0, 20, 150));
 
-    //timeline dynamically updates the label every second for a real-time clock
+    // timeline dynamically updates the label every second for a real-time clock
     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
       titleLabel.setText("Fair Job Planning System            " + date.format(new Date()) + " "
           + clock.format(new Date()));
     }));
-    timeline.setCycleCount(Animation.INDEFINITE); //sets the timeline to update until program stops
+    timeline.setCycleCount(Animation.INDEFINITE); // sets the timeline to update until program stops
     timeline.play();
 
     topButtons.getChildren().addAll(addEmployeesButton, addTasksButton);
@@ -100,9 +102,10 @@ public class HomeScene extends Scene {
     root.setTop(topControl);
     root.setPadding(new Insets(20));
   }
-  
+
   /**
    * private method initializes center element of BorderPane
+   * 
    * @param root is the BorderPane to modify
    */
   private void initCenter(BorderPane root) {
@@ -118,24 +121,25 @@ public class HomeScene extends Scene {
     ListView<Employee> employeeList = new ListView<>();
 
     ObservableList<Employee> items = FXCollections.observableArrayList();
-    if(!Main.getEmployeesInUnit().isEmpty()) {
-      items.addAll(Main.getEmployeesInUnit()); //TODO: uncomment when functionality is finished
+    if (!Main.getEmployeesInUnit().isEmpty()) {
+      items.addAll(Main.getEmployeesInUnit()); // TODO: uncomment when functionality is finished
     }
-    
+
     employeeList.setItems(items);
     employeeList.setOnMouseClicked(e -> {
-      if(employeeList.getSelectionModel().getSelectedItem() instanceof Employee) {
-        Main.switchToOptions(this.mainStage, employeeList.getSelectionModel().getSelectedItem()); 
+      if (employeeList.getSelectionModel().getSelectedItem() instanceof Employee) {
+        Main.switchToOptions(this.mainStage, employeeList.getSelectionModel().getSelectedItem());
       }
     });
-    
+
     centerControls.getChildren().addAll(header, employeeList);
 
     root.setCenter(centerControls);
   }
-  
+
   /**
    * private method initializes bottom element of BorderPane
+   * 
    * @param root is the BorderPane to modify
    */
   private void initBottom(BorderPane root) {
@@ -153,7 +157,7 @@ public class HomeScene extends Scene {
       Main.switchToResults(this.mainStage);
       JSONFileParser.write(Main.getCurFileOpen());
     });
-    
+
     FileChooser fileChooser = new FileChooser();
     Button fileChooseButton = new Button("Load Data");
     generateReport.setWrapText(true);
@@ -166,31 +170,38 @@ public class HomeScene extends Scene {
     fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
     fileChooseButton.setOnAction(e -> {
       File selectedFile = fileChooser.showOpenDialog(mainStage);
-      
+
       try {
         JSONFileParser.readData(selectedFile.getAbsolutePath());
       } catch (FileNotFoundException e1) {
-        //won't happen
+        // won't happen
       }
-      
+
       Main.setCurFileOpen(selectedFile.getAbsolutePath());
       Main.setCurFileOpenName(selectedFile.getName());
     });
 
     HBox logoPosition = new HBox(10);
     logoPosition.setAlignment(Pos.BOTTOM_RIGHT);
-    
-    // TODO: Fix so logo is at bottom left of window
-    ImageView imv = new ImageView();
-    Image logo = new Image("Residence Hall Facilities_color-flush.png");
-    imv.setImage(logo);
-    imv.setFitWidth(400);
-    imv.setPreserveRatio(true);
-    imv.setSmooth(true);
-    imv.setCache(true);
-    
+
+    // If logo image is not found, a label will display instead
+    try {
+      ImageView imv = new ImageView();
+      Image logo = new Image("Residence Hall Facilities_color-flush.png");
+      imv.setImage(logo);
+      imv.setFitWidth(400);
+      imv.setPreserveRatio(true);
+      imv.setSmooth(true);
+      imv.setCache(true);
+      logoPosition.getChildren().add(imv);
+    } catch (IllegalArgumentException e) {
+      Label error = new Label();
+      error.setText("UW Housing Logo");
+      logoPosition.getChildren().add(error);
+    }
+
+
     bottomControls.setSpacing(40);
-    logoPosition.getChildren().add(imv);
     bottomControls.getChildren().addAll(fileChooseButton, generateReport, logoPosition);
     root.setBottom(bottomControls);
   }
