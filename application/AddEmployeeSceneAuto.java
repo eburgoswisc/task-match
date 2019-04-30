@@ -6,12 +6,21 @@ package application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class AddEmployeeSceneAuto extends Scene {
@@ -27,15 +36,7 @@ public class AddEmployeeSceneAuto extends Scene {
     root.setPadding(new Insets(10));
 
     Label inputFile = new Label("File loaded: ");
-//
-//    FileChooser fileChooser = new FileChooser();
-//
-//    fileChooser.setTitle("Input File");
-//
-//    fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
-//    inputFile.setOnAction(e -> {
-//      File selectedFile = fileChooser.showOpenDialog(mainStage);
-//    });
+    inputFile.setFont(new Font(15));
 
     Button addToUnit = new Button("Add to Unit");
 
@@ -44,7 +45,7 @@ public class AddEmployeeSceneAuto extends Scene {
       Main.switchToAddEmployeesManual(this.mainStage);
     });
 
-    Button back = new Button("Back");
+    Button back = new Button("Back to Home");
     back.setOnAction(e -> {
       Main.switchToHome(this.mainStage);
     });
@@ -66,21 +67,29 @@ public class AddEmployeeSceneAuto extends Scene {
     
     HBox line1 = new HBox(10);
     HBox line2 = new HBox(10);
-    HBox line3 = new HBox(100);
+    HBox line3 = new HBox(40);
+    VBox spacing = new VBox(10);
 
-    line1.setPadding(new Insets(0, 0, 30, 0));
+    Label fileName = new Label(Main.getCurFileOpenName());
+    fileName.setFont(new Font(15));
     
-    line1.getChildren().addAll(inputFile, new Label(Main.getCurFileOpenName()));
+    line1.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));
+    
+    line1.setSpacing(10);
+    
+    line1.getChildren().addAll(inputFile, fileName);
 
     line2.getChildren().addAll(comboBox, addToUnit);
 
+    line3.setAlignment(Pos.BOTTOM_RIGHT);
     line3.getChildren().addAll(addNewEmployee, back);
+    
+    
+    spacing.getChildren().addAll(line1, line2, line3);
+    spacing.setSpacing(30);
+    root.setPadding(new Insets(15,15,15,15));
 
-    root.setTop(line1);
-    root.setCenter(line2);
-    root.setBottom(line3);
-
-
+    root.setTop(spacing);
 
   }
 

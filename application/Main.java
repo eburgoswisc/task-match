@@ -18,7 +18,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) {
     curFileOpenPath = "";
-    setCurFileOpenName("");
+    setCurFileOpenName("file not found");
     allTasks = new ArrayList<>();
     allEmployees = new ArrayList<>();
     employeesInUnit = new ArrayList<>();
@@ -72,7 +72,7 @@ public class Main extends Application {
   public static void switchToAddEmployeesAuto(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 500, 150);
+      currentScene = new AddEmployeeSceneAuto(primaryStage, root, 500, 170);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {
