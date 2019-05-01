@@ -45,9 +45,9 @@ public class ResultsScene extends Scene {
    * Constructor
    * 
    * @param mainStage - Stage object
-   * @param root      - Borderpane object
-   * @param width     - int
-   * @param height    - int
+   * @param root - Borderpane object
+   * @param width - int
+   * @param height - int
    */
   public ResultsScene(Stage mainStage, BorderPane root, double width, double height) {
     super(root, width, height);
@@ -75,21 +75,13 @@ public class ResultsScene extends Scene {
     bottomButtons.setPadding(new Insets(0, 60, 50, 60));
     bottomButtons.setSpacing(50);
 
-    // Get buttons
-    Button backBut = new Button("Back");
-    backBut.setOnAction(e -> {
-      Main.getAllEmployees().addAll(Main.getEmployeesInUnit());
-      Main.getEmployeesInUnit().clear();
-      Main.switchToHome(this.mainStage);
-    });
-
     // Report button
     Button downReportBut = new Button("Download Report");
     downReportBut.setOnAction(e -> {
       downloadReport();
     });
     // Add to HBox
-    bottomButtons.getChildren().addAll(downReportBut, backBut);
+    bottomButtons.getChildren().addAll(downReportBut);
 
     // Add to root
     root.setBottom(bottomButtons);
@@ -105,30 +97,32 @@ public class ResultsScene extends Scene {
   private void initCenter(BorderPane root) {
     // Make center box for reporting tasks
     HBox reportBox = new HBox();
-    reportBox.setPadding(new Insets(0, 60, 50, 60));
+    reportBox.setPadding(new Insets(0, 0, 40, 60));
 
 
 
     List<String> list = new ArrayList<String>();
     for (int i = 0; i < Main.getAllTasks().size(); ++i) {
-      String s = "[" + Main.getAllTasks().get(i).getDescription() + "]\n\t\t";
-      for (int j = 0; j < Main.getAllTasks().get(i).getEmployees().size(); ++j) {
-    	Employee current = Main.getAllTasks().get(i).getEmployees().get(j);
-        s = s + "[" + current.getName() + "]\t";
-        if (!current.isWiGrow()) {
-        	s = s + "NOTE: Obtain WiGrow";
-        }
-        if (!current.isExceptionReport()) {
-        	s = s + "NOTE: Obtain Exception Report";
-        }
-        if (!current.isScheduling()) {
-        	s = s + "NOTE: Obtain Scheduling";
-        }
 
+      if (!Main.getAllTasks().get(i).getEmployees().isEmpty()) {
+        String s = Main.getAllTasks().get(i).getDescription() + "\n";
+        for (int j = 0; j < Main.getAllTasks().get(i).getEmployees().size(); ++j) {
+          Employee current = Main.getAllTasks().get(i).getEmployees().get(j);
+          s = s + "[" + current.getName();
+          if (!current.isWiGrow()) {
+            s = s + "\t\tNOTE: WiGrow Needed";
+          }
+          if (!current.isExceptionReport()) {
+            s = s + "\t\tNOTE: Exception Report Needed";
+          }
+          if (!current.isScheduling()) {
+            s = s + "\t\tNOTE: Incomplete Scheduling";
+          }
+          s = s + "]";
+        }
+        // Add to list
+        list.add(s);
       }
-      // Add to list
-      list.add(s);
-
     }
 
     // ListView Object
@@ -138,6 +132,8 @@ public class ResultsScene extends Scene {
     ObservableList<String> items = FXCollections.observableArrayList(list);
     // Add to reportList
     reportList.setItems(items);
+
+    reportList.setMinWidth(600);
 
     // Add stuff to box
     reportBox.getChildren().addAll(reportList);
@@ -149,9 +145,9 @@ public class ResultsScene extends Scene {
   /**
    * Method for setting up top of screen
    * 
- * @param root
- */
-private void initTop(BorderPane root) {
+   * @param root
+   */
+  private void initTop(BorderPane root) {
     // Make HBox
     HBox topBox = new HBox();
     // Set Label
@@ -190,7 +186,8 @@ private void initTop(BorderPane root) {
 
     try {
       // Write Header
-      writer.write("Task ID,Task Description,Employee ID, Employee Name, WiGrow, Scheduling, Exception Report\n");
+      writer.write(
+          "Task ID,Task Description,Employee ID, Employee Name, WiGrow Needed, Incomplete Scheduling, Exception Report Needed\n");
       // Look through employee and their task
       for (int i = 0; i < inUnit.size(); ++i) {
         Employee current = inUnit.get(i);
@@ -198,9 +195,9 @@ private void initTop(BorderPane root) {
           Task currentTask = allTasks.get(j);
           // If found, write to file
           if (currentTask.getEmployees().contains(current)) {
-            writer.write(currentTask.getID() + "," + currentTask.getDescription() + "," + current.getId() + "," 
-          + current.getName() + "," + current.isWiGrow() + "," + current.isScheduling() + "," 
-            		+ current.isExceptionReport() + "\n");
+            writer.write(currentTask.getID() + "," + currentTask.getDescription() + ","
+                + current.getId() + "," + current.getName() + "," + current.isWiGrow() + ","
+                + current.isScheduling() + "," + current.isExceptionReport() + "\n");
           }
         }
       }
@@ -210,9 +207,8 @@ private void initTop(BorderPane root) {
 
     }
     // Alert pop up
-    Alert downloadSuccess =
-        new Alert(AlertType.NONE, "Successfully Downloaded Report! It will be named " + fileName
-            + " and will be located in your program's local directory.");
+    Alert downloadSuccess = new Alert(AlertType.NONE, "Successfully Downloaded Report! It is named "
+        + fileName + " and is located in your program's local directory.");
     downloadSuccess.setTitle("Download File");
     downloadSuccess.getButtonTypes().add(ButtonType.OK);
     downloadSuccess.showAndWait();

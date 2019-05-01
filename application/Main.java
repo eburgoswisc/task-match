@@ -153,7 +153,7 @@ public class Main extends Application {
     employeesInUnit.remove(e);
   }
 
-  private void closeReq(Event e) {
+  protected static void closeReq(Event e) {
 
     if (!curFileOpenName.equals("file not found")) {
       Alert closeAlert = new Alert(AlertType.NONE);
@@ -180,9 +180,9 @@ public class Main extends Application {
         break;
       }
       if (tempTasks.size() == 1) {
-        jobIndex = rng.nextInt(tempTasks.size());
-      } else {
         jobIndex = 0;
+      } else {
+        jobIndex = rng.nextInt(tempTasks.size());
       }
       tempTasks.get(jobIndex).getEmployees().add(e);
       tempTasks.remove(jobIndex);
