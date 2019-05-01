@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 import javafx.application.Application;
 import javafx.event.Event;
@@ -23,7 +22,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    curFileOpenPath = "default.json";
+    curFileOpenPath = "";
     setCurFileOpenName("file not found");
     allTasks = new ArrayList<>();
     allEmployees = new ArrayList<>();
@@ -155,26 +154,16 @@ public class Main extends Application {
   }
 
   private void closeReq(Event e) {
-    Alert closeAlert = new Alert(AlertType.NONE);
-    closeAlert.setTitle("Save before quitting?");
-    closeAlert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 
     if (!curFileOpenName.equals("file not found")) {
+      Alert closeAlert = new Alert(AlertType.NONE);
+      closeAlert.setTitle("Save before quitting?");
+      closeAlert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
       closeAlert.setContentText("Would you like to save \'" + curFileOpenName + "\'?");
       closeAlert.showAndWait();
+      
       if (closeAlert.getResult().equals(ButtonType.YES)) {
         JSONFileParser.write(curFileOpenPath);
-      }
-      if (closeAlert.getResult().equals(ButtonType.CANCEL)) {
-        e.consume();
-      }
-    } else {
-      closeAlert
-          .setContentText("No file open to save, would you like to save any changes you have made"
-              + " to a new file? (file will be named default.json)");
-      closeAlert.showAndWait();
-      if (closeAlert.getResult().equals(ButtonType.YES)) {
-        JSONFileParser.write("default.json");
       }
       if (closeAlert.getResult().equals(ButtonType.CANCEL)) {
         e.consume();

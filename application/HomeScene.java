@@ -20,6 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -74,14 +76,26 @@ public class HomeScene extends Scene {
     Button addEmployeesButton = new Button("Choose Employees");
     addEmployeesButton.setMinWidth(topButtons.getPrefWidth());
     addEmployeesButton.setOnAction(e -> {
-      Main.switchToAddEmployeesAuto(this.mainStage);
+      if (Main.getCurFileOpenName().equals("file not found")) {
+        Alert loadFile = new Alert(AlertType.WARNING, "Load a file before adding Employees to unit.");
+        loadFile.showAndWait();
+      }
+      else {
+        Main.switchToAddEmployeesAuto(this.mainStage);
+      }
     });
 
     // Changes the scene to allow users to add new, non-existing tasks
     Button addTasksButton = new Button("Add New Task");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
     addTasksButton.setOnAction(e -> {
-      Main.switchToAddTasksManual(this.mainStage);
+      if (Main.getCurFileOpenName().equals("file not found")) {
+        Alert loadFile = new Alert(AlertType.WARNING, "Load a file before adding new tasks.");
+        loadFile.showAndWait();
+      }
+      else {
+        Main.switchToAddTasksManual(this.mainStage);
+      }
     });
 
     Label titleLabel = new Label(); // title label for top of UI
@@ -156,8 +170,14 @@ public class HomeScene extends Scene {
     generateReport.setMinWidth(200);
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
-      Main.produceResult();
-      Main.switchToResults(this.mainStage);
+      if (Main.getCurFileOpenName().equals("file not found")) {
+        Alert loadFile = new Alert(AlertType.WARNING, "Load a file before generating a report");
+        loadFile.showAndWait();
+      }
+      else {
+        Main.produceResult();
+        Main.switchToResults(this.mainStage);
+      }
     });
 
     Button fileChooseButton = new Button("Load Data");
