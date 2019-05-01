@@ -3,10 +3,16 @@
  */
 package application;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -144,13 +150,46 @@ public class ResultsScene extends Scene {
   }
 
   /**
-   * Method for generating report file
+   * Method for writing a report file in CSV format.
    * 
    * @throws JSONException
    * 
    */
   private void downloadReport() {
+	  // Get Employees and Tasks
+	  ArrayList<Employee> inUnit = Main.getEmployeesInUnit();
+	  ArrayList<Task> allTasks = Main.getAllTasks();
+	  
+	  // Create BufferedWriter Object
+	  BufferedWriter writer = null;
+	  try {
+		  writer = new BufferedWriter(new FileWriter(new Date() + "_report.csv"));
+	  } catch (IOException e) {
+		  System.out.println("Filename already exists.");
+	  }
+	  
+	  try {
+		  // Write Header
+		  writer.write("Task ID,Task Description,Employee ID, Employee Name");
+		  // Look through employee and their task
+		  for (int i = 0; i < inUnit.size(); ++i) {
+			  Employee current = inUnit.get(i);
+			  for (int j = 0; j < allTasks.size(); ++j) {
+				 Task currentTask = allTasks.get(j);
+				 // If found, write to file
+				 if (currentTask.getEmployees().contains(current)) {
+					 writer.write(currentTask.getID() + "," + currentTask.getDescription() + "," + current.getId() + "," + current.getName());
+				 }
+			  }
+		  } 
+		  writer.close();
+	  } catch (IOException e) {
+		  // Do nothing
 
+  }
+	  
+	 
+	  
   }
 
 }
