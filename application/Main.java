@@ -1,6 +1,8 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.scene.Scene;
@@ -18,7 +20,7 @@ public class Main extends Application {
   private static ArrayList<Task> allTasks;
   private static String curFileOpenPath;
   private static String curFileOpenName;
-  
+
   @Override
   public void start(Stage primaryStage) {
     curFileOpenPath = "default.json";
@@ -26,11 +28,11 @@ public class Main extends Application {
     allTasks = new ArrayList<>();
     allEmployees = new ArrayList<>();
     employeesInUnit = new ArrayList<>();
-    
+
     primaryStage.setOnCloseRequest(e -> {
       closeReq(e);
     });
-    
+
     try {
       BorderPane root = new BorderPane();
       currentScene = new HomeScene(primaryStage, root, 920, 600);
@@ -156,27 +158,45 @@ public class Main extends Application {
     Alert closeAlert = new Alert(AlertType.NONE);
     closeAlert.setTitle("Save before quitting?");
     closeAlert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-    
-    if(!curFileOpenName.equals("file not found")) {
-      closeAlert.setContentText("Would you like to save \'"+curFileOpenName+"\'?");
+
+    if (!curFileOpenName.equals("file not found")) {
+      closeAlert.setContentText("Would you like to save \'" + curFileOpenName + "\'?");
       closeAlert.showAndWait();
-      if(closeAlert.getResult().equals(ButtonType.YES)) {
+      if (closeAlert.getResult().equals(ButtonType.YES)) {
         JSONFileParser.write(curFileOpenPath);
       }
-      if(closeAlert.getResult().equals(ButtonType.CANCEL)) {
+      if (closeAlert.getResult().equals(ButtonType.CANCEL)) {
+        e.consume();
+      }
+    } else {
+      closeAlert
+          .setContentText("No file open to save, would you like to save any changes you have made"
+              + " to a new file? (file will be named default.json)");
+      closeAlert.showAndWait();
+      if (closeAlert.getResult().equals(ButtonType.YES)) {
+        JSONFileParser.write("default.json");
+      }
+      if (closeAlert.getResult().equals(ButtonType.CANCEL)) {
         e.consume();
       }
     }
-    else {
-      closeAlert.setContentText("No file open to save, would you like to save any changes you have made"
-          + " to a new file? (file will be named default.json)");
-      closeAlert.showAndWait();
-      if(closeAlert.getResult().equals(ButtonType.YES)) {
-        JSONFileParser.write("default.json");
+  }
+
+  protected static void produceResult() {
+    ArrayList<Task> tempTasks = new ArrayList<Task>(allTasks);
+    Random rng = new Random();
+    int jobIndex;
+    for (Employee e : getEmployeesInUnit()) {
+      if (tempTasks.isEmpty()) {
+        break;
       }
-      if(closeAlert.getResult().equals(ButtonType.CANCEL)) {
-        e.consume();
+      if (tempTasks.size() == 1) {
+        jobIndex = rng.nextInt(tempTasks.size());
+      } else {
+        jobIndex = 0;
       }
+      tempTasks.get(jobIndex).getEmployees().add(e);
+      tempTasks.remove(jobIndex);
     }
   }
 }

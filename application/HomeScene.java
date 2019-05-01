@@ -156,7 +156,7 @@ public class HomeScene extends Scene {
     generateReport.setMinWidth(200);
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
-      this.produceResult();
+      Main.produceResult();
       Main.switchToResults(this.mainStage);
     });
 
@@ -209,19 +209,5 @@ public class HomeScene extends Scene {
     bottomControls.setSpacing(40);
     bottomControls.getChildren().addAll(fileChooseButton, generateReport, logoPosition);
     root.setBottom(bottomControls);
-  }
-
-  private void produceResult() {
-    for(Employee e : Main.getEmployeesInUnit()) {
-      Random rng = new Random();
-      while(true) {
-        int jobIndex = rng.nextInt(Main.getAllTasks().size());
-        
-        if(Main.getAllTasks().get(jobIndex).getEmployees().isEmpty()) {
-          Main.getAllTasks().get(jobIndex).getEmployees().add(e);
-          break;
-        }
-      }
-    }
   }
 }
