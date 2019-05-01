@@ -174,7 +174,7 @@ public class ResultsScene extends Scene {
 
     try {
       // Write Header
-      writer.write("Task ID,Task Description,Employee ID, Employee Name\n");
+      writer.write("Task ID,Task Description,Employee ID, Employee Name, WiGrow, Scheduling, Exception Report\n");
       // Look through employee and their task
       for (int i = 0; i < inUnit.size(); ++i) {
         Employee current = inUnit.get(i);
@@ -182,8 +182,9 @@ public class ResultsScene extends Scene {
           Task currentTask = allTasks.get(j);
           // If found, write to file
           if (currentTask.getEmployees().contains(current)) {
-            writer.write(currentTask.getID() + "," + currentTask.getDescription() + ","
-                + current.getId() + "," + current.getName() + "\n");
+            writer.write(currentTask.getID() + "," + currentTask.getDescription() + "," + current.getId() + "," 
+          + current.getName() + "," + current.isWiGrow() + "," + current.isScheduling() + "," 
+            		+ current.isExceptionReport() + "\n");
           }
         }
       }
@@ -192,7 +193,7 @@ public class ResultsScene extends Scene {
       // Do nothing
 
     }
-
+    // Alert popup
     Alert downloadSuccess =
         new Alert(AlertType.NONE, "Successfully Downloaded Report! It will be named " + fileName
             + " and will be located in your program's local directory.");
