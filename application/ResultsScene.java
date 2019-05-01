@@ -4,7 +4,10 @@
 package application;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -96,12 +99,25 @@ public class ResultsScene extends Scene {
     // Make center box for reporting tasks
     HBox reportBox = new HBox();
     reportBox.setPadding(new Insets(0, 60, 50, 60));
+    
+   
+
+    List<String> list = new ArrayList<String>();
+    for(int i = 0; i < Main.getAllTasks().size(); ++i) {
+    	String s = "[" + Main.getAllTasks().get(i).getDescription() + "]\n\t\t";
+    	for(int j = 0; j< Main.getAllTasks().get(i).getEmployees().size(); ++j) {
+    		s = s + "[" + Main.getAllTasks().get(i).getEmployees().get(j).getName() +"]";
+    		
+    	}
+    	list.add(s);    		
+    		
+    }
+    
     // ListView Object
     ListView<String> reportList = new ListView<>();
 
     // Task Report list
-    ObservableList<String> items = FXCollections.observableArrayList(
-        "[Task1]\n\t\t[employee1Name]\n\t\t[employee2Name]", "[Task2]\n\t\t[employee1Name]");
+    ObservableList<String> items = FXCollections.observableArrayList(list);
     // Add to reportList
     reportList.setItems(items);
 

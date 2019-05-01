@@ -118,4 +118,14 @@ public class Task {
   public void setAssigned(boolean assigned) {
     this.assigned = assigned;
   }
+  
+  /**
+   * Assign this task to an employee by adding the employee to
+   * employees list
+   * @param employee to assign the task to
+   */
+  public void assignTo(Employee employee) {
+  	employees.add(employee);
+  	this.setAssigned(true);
+  }
 }

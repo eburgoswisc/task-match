@@ -152,6 +152,7 @@ public class HomeScene extends Scene {
     generateReport.setMinWidth(200);
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
+    	this.produceResult();
       Main.switchToResults(this.mainStage);
       JSONFileParser.write(Main.getCurFileOpen()); //TODO fix this. this is where the exception is generated. 
     });
@@ -205,4 +206,16 @@ public class HomeScene extends Scene {
     bottomControls.getChildren().addAll(fileChooseButton, generateReport, logoPosition);
     root.setBottom(bottomControls);
   }
+  
+  private void produceResult() {
+		while(!Main.getEmployeesInUnit().isEmpty())
+			for(int i = 0; i < Main.getAllTasks().size(); ++i) {
+				if(!Main.getEmployeesInUnit().isEmpty()) {
+					Task t = Main.getAllTasks().get(i);
+					t.assignTo(Main.getEmployeesInUnit().get(0));
+					Main.setTask(i, t);
+					Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(0));
+				}
+			}
+	}
 }
