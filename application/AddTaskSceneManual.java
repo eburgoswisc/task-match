@@ -12,9 +12,16 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class AddTaskSceneManual extends Scene {
@@ -26,7 +33,18 @@ public class AddTaskSceneManual extends Scene {
     super(root, width, height);
     this.mainStage = mainStage;
     this.mainStage.setTitle("Add a New Task");
-
+    
+    HBox fileInfo = new HBox();
+    
+    Label inputFile = new Label("File loaded: ");
+    inputFile.setFont(new Font(15));
+    
+    Label fileName = new Label(Main.getCurFileOpenName());
+    fileName.setFont(new Font(15));
+    
+    fileInfo.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID,
+        new CornerRadii(4), new BorderWidths(2))));
+    fileInfo.getChildren().addAll(inputFile, fileName);
     // root.autosize();
     root.setPadding(new Insets(20));
 
@@ -35,8 +53,9 @@ public class AddTaskSceneManual extends Scene {
 
     Label favLabel = new Label("Favorable");
 
-    ChoiceBox favInput =
-        new ChoiceBox(FXCollections.observableArrayList("No", new Separator(), "Yes"));
+    ChoiceBox<Object> favInput =
+        new ChoiceBox<Object>(FXCollections.observableArrayList("No", new Separator(), "Yes"));
+    
     favInput.getSelectionModel().selectFirst();
     favInput.setStyle("-fx-font-size:15");
 
@@ -51,7 +70,7 @@ public class AddTaskSceneManual extends Scene {
 
     HBox inputs = new HBox(10); // All central inputs
     inputs.setAlignment(Pos.BASELINE_CENTER);
-    inputs.setPadding(new Insets(20, 0, 0, 0));
+    inputs.setPadding(new Insets(30, 0, 0, 0));
     inputs.getChildren().addAll(labels, textInputs);
 
     Button cancel = new Button("Cancel");
@@ -71,9 +90,10 @@ public class AddTaskSceneManual extends Scene {
     navButtons.setAlignment(Pos.CENTER_RIGHT);
     navButtons.setPadding(new Insets(20, 20, 100, 20));
     navButtons.getChildren().addAll(cancel, add);
-
-    root.setTop(inputs);
-    root.setCenter(navButtons);
+    
+    root.setTop(fileInfo);
+    root.setCenter(inputs);
+    root.setBottom(navButtons);
   }
 
   private boolean getBoolean(String choice) {
