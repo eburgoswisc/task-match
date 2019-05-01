@@ -196,6 +196,7 @@ public class ResultsScene extends Scene {
     Alert downloadSuccess =
         new Alert(AlertType.NONE, "Successfully Downloaded Report! It will be named " + fileName
             + " and will be located in your program's local directory.");
+    downloadSuccess.setTitle("Download File");
     downloadSuccess.getButtonTypes().add(ButtonType.OK);
     downloadSuccess.showAndWait();
   }

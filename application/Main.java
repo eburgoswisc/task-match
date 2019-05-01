@@ -89,7 +89,7 @@ public class Main extends Application {
   public static void switchToAddEmployeesManual(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new AddEmployeeSceneManual(primaryStage, root, 550, 330);
+      currentScene = new AddEmployeeSceneManual(primaryStage, root, 550, 380);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {

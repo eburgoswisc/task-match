@@ -27,6 +27,7 @@ public class Task {
     this.description = description;
     this.favorable = favorable;
     this.employees = new ArrayList<Employee>();
+    this.ID = Main.getAllTasks().size() + 1;
   }
 
   /**

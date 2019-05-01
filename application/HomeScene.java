@@ -223,17 +223,5 @@ public class HomeScene extends Scene {
         }
       }
     }
-//    while (!Main.getEmployeesInUnit().isEmpty()) {
-//      for (int i = 0; i < Main.getAllTasks().size(); ++i) {
-//        if (!Main.getEmployeesInUnit().isEmpty()) {
-//          Random random = new Random();
-//          int index = random.nextInt(Main.getEmployeesInUnit().size());
-//          Task t = Main.getAllTasks().get(i);
-//          t.assignTo(Main.getEmployeesInUnit().get(index));
-//          Main.setTask(i, t);
-//          Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(index));
-//        }
-//      }
-//    }
   }
 }
