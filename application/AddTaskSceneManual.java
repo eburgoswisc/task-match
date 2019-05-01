@@ -26,24 +26,26 @@ public class AddTaskSceneManual extends Scene {
     this.mainStage = mainStage;
     this.mainStage.setTitle("Add a New Task");
 
-    //root.autosize();
+    // root.autosize();
     root.setPadding(new Insets(20));
 
     Label taskLabel = new Label("Task");
     TextField tasksInput = new TextField();
 
     Label favLabel = new Label("Favorable");
-
-    ChoiceBox favInput =
-        new ChoiceBox(FXCollections.observableArrayList("No", new Separator(), "Yes"));
+    Label idLabel = new Label("Task ID");
+    TextField idInput = new TextField();
+    
+    ChoiceBox<String> favInput =
+        new ChoiceBox<String>(FXCollections.observableArrayList("No", "Yes"));
     favInput.getSelectionModel().selectFirst();
     favInput.setStyle("-fx-font-size:15");
 
     VBox labels = new VBox(20); // Label column
-    labels.getChildren().addAll(taskLabel, favLabel);
+    labels.getChildren().addAll(taskLabel, favLabel, idLabel);
 
     VBox textInputs = new VBox(10); // Textfield column
-    textInputs.getChildren().addAll(tasksInput, favInput);
+    textInputs.getChildren().addAll(tasksInput, favInput, idInput);
 
     labels.setPadding(new Insets(5, 0, 0, 10));
     textInputs.setPadding(new Insets(0, 0, 0, 0));
@@ -54,12 +56,25 @@ public class AddTaskSceneManual extends Scene {
     inputs.getChildren().addAll(labels, textInputs);
 
     Button cancel = new Button("Cancel");
+
     cancel.setOnAction(e -> {
       Main.switchToHome(this.mainStage);
     });
 
     Button add = new Button("Add");
     add.setOnAction(e -> {
+      try {
+        Task toAdd = new Task(tasksInput.getText(), false);
+        toAdd.setID(Integer.parseInt(idInput.getText()));
+        if (favInput.getSelectionModel().getSelectedItem().equals("Yes")) {
+          toAdd.setFavorable(true);
+        }
+  
+        Main.getAllTasks().add(toAdd);
+      }
+      catch(Exception ex) {
+        
+      }
       Main.switchToHome(this.mainStage);
     });
 
