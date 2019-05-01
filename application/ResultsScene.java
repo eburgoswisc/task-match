@@ -4,27 +4,26 @@
 package application;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-// import taskMatch.JSONParser;
 
 /**
  * Scene that shows the report of tasks assign to employees. Generates a file if desired.
@@ -40,6 +39,7 @@ public class ResultsScene extends Scene {
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss");
   private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01
                                                                                  // 2019 14:02:13
+  private final SimpleDateFormat fileDate = new SimpleDateFormat("YYYY-MM-dd--HH-mm-ss");
 
   /**
    * Constructor
@@ -78,13 +78,15 @@ public class ResultsScene extends Scene {
     // Get buttons
     Button backBut = new Button("Back");
     backBut.setOnAction(e -> {
+      Main.getAllEmployees().addAll(Main.getEmployeesInUnit());
+      Main.getEmployeesInUnit().clear();
       Main.switchToHome(this.mainStage);
     });
 
     // Report button
     Button downReportBut = new Button("Download Report");
     downReportBut.setOnAction(e -> {
-      downloadReport();;
+      downloadReport();
     });
     // Add to HBox
     bottomButtons.getChildren().addAll(downReportBut, backBut);
@@ -156,40 +158,46 @@ public class ResultsScene extends Scene {
    * 
    */
   private void downloadReport() {
-	  // Get Employees and Tasks
-	  ArrayList<Employee> inUnit = Main.getEmployeesInUnit();
-	  ArrayList<Task> allTasks = Main.getAllTasks();
-	  
-	  // Create BufferedWriter Object
-	  BufferedWriter writer = null;
-	  try {
-		  writer = new BufferedWriter(new FileWriter(new Date() + "_report.csv"));
-	  } catch (IOException e) {
-		  System.out.println("Filename already exists.");
-	  }
-	  
-	  try {
-		  // Write Header
-		  writer.write("Task ID,Task Description,Employee ID, Employee Name");
-		  // Look through employee and their task
-		  for (int i = 0; i < inUnit.size(); ++i) {
-			  Employee current = inUnit.get(i);
-			  for (int j = 0; j < allTasks.size(); ++j) {
-				 Task currentTask = allTasks.get(j);
-				 // If found, write to file
-				 if (currentTask.getEmployees().contains(current)) {
-					 writer.write(currentTask.getID() + "," + currentTask.getDescription() + "," + current.getId() + "," + current.getName());
-				 }
-			  }
-		  } 
-		  writer.close();
-	  } catch (IOException e) {
-		  // Do nothing
+    // Get Employees and Tasks
+    ArrayList<Employee> inUnit = Main.getEmployeesInUnit();
+    ArrayList<Task> allTasks = Main.getAllTasks();
 
-  }
-	  
-	 
-	  
+    // Create BufferedWriter Object
+    String fileName = fileDate.format(new Date()) + "_report.csv";
+    BufferedWriter writer = null;
+    try {
+      writer = new BufferedWriter(new FileWriter(fileName));
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.out.println("Filename already exists.");
+    }
+
+    try {
+      // Write Header
+      writer.write("Task ID,Task Description,Employee ID, Employee Name\n");
+      // Look through employee and their task
+      for (int i = 0; i < inUnit.size(); ++i) {
+        Employee current = inUnit.get(i);
+        for (int j = 0; j < allTasks.size(); ++j) {
+          Task currentTask = allTasks.get(j);
+          // If found, write to file
+          if (currentTask.getEmployees().contains(current)) {
+            writer.write(currentTask.getID() + "," + currentTask.getDescription() + ","
+                + current.getId() + "," + current.getName() + "\n");
+          }
+        }
+      }
+      writer.close();
+    } catch (IOException e) {
+      // Do nothing
+
+    }
+
+    Alert downloadSuccess =
+        new Alert(AlertType.NONE, "Successfully Downloaded Report! It will be named " + fileName
+            + " and will be located in your program's local directory.");
+    downloadSuccess.getButtonTypes().add(ButtonType.OK);
+    downloadSuccess.showAndWait();
   }
 
 }

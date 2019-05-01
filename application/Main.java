@@ -2,6 +2,7 @@ package application;
 
 import java.util.ArrayList;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -27,18 +28,7 @@ public class Main extends Application {
     employeesInUnit = new ArrayList<>();
     
     primaryStage.setOnCloseRequest(e -> {
-      if(!curFileOpenName.equals("file not found")) {
-        Alert closeAlert = new Alert(AlertType.CONFIRMATION, "Would you like to save \'"+curFileOpenName+"\'? (Click Ok to save, "
-            + "Cancel to exit without saving");
-        closeAlert.showAndWait();
-        if(closeAlert.getResult().equals(ButtonType.OK)) {
-          JSONFileParser.write(curFileOpenPath);
-        }
-      }
-      else {
-        Alert closeAlert = new Alert(AlertType.INFORMATION, "No file open to save, press OK to terminate the program.");
-        closeAlert.showAndWait();
-      }
+      closeReq(e);
     });
     
     try {
@@ -122,7 +112,6 @@ public class Main extends Application {
     launch(args);
   }
 
-
   public static ArrayList<Employee> getAllEmployees() {
     return allEmployees;
   }
@@ -161,5 +150,33 @@ public class Main extends Application {
 
   public static void removeEmployeeFromTheUnit(Employee e) {
     employeesInUnit.remove(e);
+  }
+
+  private void closeReq(Event e) {
+    Alert closeAlert = new Alert(AlertType.NONE);
+    closeAlert.setTitle("Save before quitting?");
+    closeAlert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+    
+    if(!curFileOpenName.equals("file not found")) {
+      closeAlert.setContentText("Would you like to save \'"+curFileOpenName+"\'?");
+      closeAlert.showAndWait();
+      if(closeAlert.getResult().equals(ButtonType.YES)) {
+        JSONFileParser.write(curFileOpenPath);
+      }
+      if(closeAlert.getResult().equals(ButtonType.CANCEL)) {
+        e.consume();
+      }
+    }
+    else {
+      closeAlert.setContentText("No file open to save, would you like to save any changes you have made"
+          + " to a new file? (file will be named default.json)");
+      closeAlert.showAndWait();
+      if(closeAlert.getResult().equals(ButtonType.YES)) {
+        JSONFileParser.write("default.json");
+      }
+      if(closeAlert.getResult().equals(ButtonType.CANCEL)) {
+        e.consume();
+      }
+    }
   }
 }

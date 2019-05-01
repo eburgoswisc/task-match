@@ -1,12 +1,11 @@
 /**
  * This is the main scene for the program. It is this scene that is first viewed when the program
- * first opens, and it's also from herer that a majority of the program is controlled.
+ * first opens.
  */
 
 package application;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -42,7 +41,13 @@ public class HomeScene extends Scene {
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss");
   private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01
                                                                                  // 2019 14:02:13
-
+  /**
+   * primary constructor for HomeScene
+   * @param mainStage is the stage that all Scenes are displayed on
+   * @param root is the LayoutManager being used
+   * @param width is width of the window
+   * @param height is the height of the window
+   */
   public HomeScene(Stage mainStage, BorderPane root, int width, int height) {
     super(root, width, height);
 
@@ -115,12 +120,11 @@ public class HomeScene extends Scene {
     header.setPadding(new Insets(20, 20, 0, 0)); // adds padding around header
 
     // creates a clickable list view
-    // TODO: dynamically change employee list
     ListView<Employee> employeeList = new ListView<>();
 
     ObservableList<Employee> items = FXCollections.observableArrayList();
     if (!Main.getEmployeesInUnit().isEmpty()) {
-      items.addAll(Main.getEmployeesInUnit()); // TODO: uncomment when functionality is finished
+      items.addAll(Main.getEmployeesInUnit()); 
     }
 
     employeeList.setItems(items);
@@ -154,10 +158,7 @@ public class HomeScene extends Scene {
     generateReport.setOnAction(e -> {
       this.produceResult();
       Main.switchToResults(this.mainStage);
-      JSONFileParser.write(Main.getCurFileOpen()); // TODO fix this. this is where the exception is
-                                                   // generated.
     });
-
 
     Button fileChooseButton = new Button("Load Data");
     fileChooseButton.setWrapText(true);
@@ -171,16 +172,18 @@ public class HomeScene extends Scene {
     fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
 
     fileChooseButton.setOnAction(e -> {
+      Main.getAllEmployees().clear();
+      Main.getEmployeesInUnit().clear();
+      Main.getAllTasks().clear();
       File selectedFile = fileChooser.showOpenDialog(mainStage);
 
       try {
         JSONFileParser.readData(selectedFile.getAbsolutePath());
-      } catch (FileNotFoundException e1) {
+        Main.setCurFileOpen(selectedFile.getAbsolutePath());
+        Main.setCurFileOpenName(selectedFile.getName());
+      } catch (Exception e1) {
         // won't happen
       }
-
-      Main.setCurFileOpen(selectedFile.getAbsolutePath());
-      Main.setCurFileOpenName(selectedFile.getName());
     });
 
     HBox logoPosition = new HBox(10);
@@ -209,17 +212,28 @@ public class HomeScene extends Scene {
   }
 
   private void produceResult() {
-    while (!Main.getEmployeesInUnit().isEmpty()) {
-      for (int i = 0; i < Main.getAllTasks().size(); ++i) {
-        if (!Main.getEmployeesInUnit().isEmpty()) {
-          Random random = new Random();
-          int index = random.nextInt(Main.getEmployeesInUnit().size());
-          Task t = Main.getAllTasks().get(i);
-          t.assignTo(Main.getEmployeesInUnit().get(index));
-          Main.setTask(i, t);
-          Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(index));
+    for(Employee e : Main.getEmployeesInUnit()) {
+      Random rng = new Random();
+      while(true) {
+        int jobIndex = rng.nextInt(Main.getAllTasks().size());
+        
+        if(Main.getAllTasks().get(jobIndex).getEmployees().isEmpty()) {
+          Main.getAllTasks().get(jobIndex).getEmployees().add(e);
+          break;
         }
       }
     }
+//    while (!Main.getEmployeesInUnit().isEmpty()) {
+//      for (int i = 0; i < Main.getAllTasks().size(); ++i) {
+//        if (!Main.getEmployeesInUnit().isEmpty()) {
+//          Random random = new Random();
+//          int index = random.nextInt(Main.getEmployeesInUnit().size());
+//          Task t = Main.getAllTasks().get(i);
+//          t.assignTo(Main.getEmployeesInUnit().get(index));
+//          Main.setTask(i, t);
+//          Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(index));
+//        }
+//      }
+//    }
   }
 }
