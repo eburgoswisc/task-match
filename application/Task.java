@@ -21,7 +21,7 @@ public class Task {
    * Constructor for creating a new task object
    * 
    * @param description Name of task
-   * @param favorable Whether task is favorable or not
+   * @param favorable   Whether task is favorable or not
    */
   public Task(String description, boolean favorable) {
     this.description = description;
@@ -118,14 +118,14 @@ public class Task {
   public void setAssigned(boolean assigned) {
     this.assigned = assigned;
   }
-  
+
   /**
-   * Assign this task to an employee by adding the employee to
-   * employees list
+   * Assign this task to an employee by adding the employee to employees list
+   * 
    * @param employee to assign the task to
    */
   public void assignTo(Employee employee) {
-  	employees.add(employee);
-  	this.setAssigned(true);
+    employees.add(employee);
+    this.setAssigned(true);
   }
 }

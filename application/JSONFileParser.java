@@ -30,7 +30,7 @@ public class JSONFileParser {
         Boolean exceptionReport = (Boolean) jo.get("Exception Report");
         Boolean scheduling = (Boolean) jo.get("Scheduling");
         Boolean WIGrow = (Boolean) jo.get("WIGrow");
-        int points = ((Number)jo.get("Points")).intValue();
+        int points = ((Number) jo.get("Points")).intValue();
 
         // Create employee variable and set WIGrow,points,scheduling,exceptionReport, name,ID
         Employee employee = new Employee(name, ID);
@@ -104,11 +104,12 @@ public class JSONFileParser {
     JSONObject doc = new JSONObject();
     JSONArray employeesArray = new JSONArray();
     JSONArray tasksArray = new JSONArray();
-    
+
     ArrayList<Employee> allEmployees = Main.getAllEmployees();
-    allEmployees.addAll(Main.getEmployeesInUnit()); //done because employees in unit do not show up in allEmployees
-    
-    for(Employee e : allEmployees) {
+    allEmployees.addAll(Main.getEmployeesInUnit()); // done because employees in unit do not show up
+                                                    // in allEmployees
+
+    for (Employee e : allEmployees) {
       JSONObject curEmployee = new JSONObject();
       curEmployee.put("ID", e.getId());
       curEmployee.put("Name", e.getName());
@@ -119,8 +120,8 @@ public class JSONFileParser {
       employeesArray.add(curEmployee);
     }
     doc.put("employees", employeesArray);
-    
-    for(Task t : Main.getAllTasks()) {
+
+    for (Task t : Main.getAllTasks()) {
       JSONObject curTask = new JSONObject();
       curTask.put("ID", t.getID());
       curTask.put("Description", t.getDescription());
@@ -128,17 +129,18 @@ public class JSONFileParser {
       tasksArray.add(curTask);
     }
     doc.put("tasks", tasksArray);
-    
+
     try (FileWriter file = new FileWriter(jsonFilePath)) {
       file.write(doc.toJSONString());
       file.flush();
-    } 
-    catch (IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
-      //JSONFileParser.write(jsonFilePath); //TODO Throws exceptions continuously when you hit generate report without loading a json file
+      JSONFileParser.write(jsonFilePath);
     }
   }
-  
+
+  //Sorry I couldn't figure out how to fix the writer, so I just wrote a new one
+  @Deprecated
   public static void writeData(String jsonFilepath) {
     // Create JSONArray Objects
     JSONObject doc = new JSONObject();
@@ -156,7 +158,7 @@ public class JSONFileParser {
 
     // Place inside loop
     try {
-      for(Employee e : Main.getAllEmployees()) {
+      for (Employee e : Main.getAllEmployees()) {
         JSONObject employee = new JSONObject();
         employee.put("ID", e.getId());
         employee.put("Name", e.getName());

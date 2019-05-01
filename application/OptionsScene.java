@@ -35,11 +35,11 @@ public class OptionsScene extends Scene {
 
   Stage mainStage;
   Employee curEmployee;
-  
+
   private ChoiceBox<String> cb1;
   private ChoiceBox<String> cb2;
   private ChoiceBox<String> cb3;
-  
+
   // sets new date formats for time stamp in titleLabel in 24 hour format
   private final SimpleDateFormat clock = new SimpleDateFormat("HH:mm:ss");
   private final SimpleDateFormat date = new SimpleDateFormat("EEE dd MMM yyyy"); // ex: Mon Apr 01
@@ -49,11 +49,12 @@ public class OptionsScene extends Scene {
    * Constructor that creates scene with input width and height.
    * 
    * @param mainStage - The primary window being used
-   * @param root - the stage's BorderPane layout
-   * @param width - The desired width of the scene window
-   * @param height - The desired height of the scene window
+   * @param root      - the stage's BorderPane layout
+   * @param width     - The desired width of the scene window
+   * @param height    - The desired height of the scene window
    */
-  public OptionsScene(Stage mainStage, BorderPane root, double width, double height, Employee curEmployee) {
+  public OptionsScene(Stage mainStage, BorderPane root, double width, double height,
+      Employee curEmployee) {
 
     super(root, width, height);
     this.curEmployee = curEmployee;
@@ -75,7 +76,7 @@ public class OptionsScene extends Scene {
   private void initTop(BorderPane root) {
 
     // One HBox holds the label elements in the VBox
-    
+
     HBox specificEmployee = new HBox(10);
     HBox mainHBox = new HBox(10);
     VBox topLabel = new VBox(40);
@@ -98,23 +99,24 @@ public class OptionsScene extends Scene {
     Label employeeInfoLabel = new Label();
     employeeInfoLabel.setText(curEmployee.toString());
     employeeInfoLabel.setFont(new Font(15));
-    employeeInfoLabel.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));
+    employeeInfoLabel.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID,
+        new CornerRadii(4), new BorderWidths(2))));
 
     Button remove = new Button();
     remove.setText("Remove from unit");
     remove.setOnAction(e -> {
-      
+
       Main.getEmployeesInUnit().remove(curEmployee);
       Main.getAllEmployees().add(curEmployee);
-      
+
       Main.switchToHome(this.mainStage);
-      });
-    
+    });
+
     // Heading label instantiation and settings
     Label headingLabel = new Label();
     headingLabel.setText("Employee options: ");
     headingLabel.setStyle("-fx-font-size:20");
-    headingLabel.setPadding(new Insets (-20, 0, 5, 0));
+    headingLabel.setPadding(new Insets(-20, 0, 5, 0));
 
     specificEmployee.getChildren().addAll(employeeInfoLabel, remove);
     specificEmployee.setSpacing(20);
@@ -154,41 +156,38 @@ public class OptionsScene extends Scene {
     scheduling.setFont(labelFont);
     wigrow.setFont(labelFont);
 
-    
+
     // ChoiceBoxes for each of the three options
     cb1 = new ChoiceBox<String>();
-    cb1.getItems().addAll("No","Yes");
+    cb1.getItems().addAll("No", "Yes");
     cb1.setStyle("-fx-font-size:15");
-    
+
     if (curEmployee.isExceptionReport()) {
       cb1.getSelectionModel().selectLast();
-    }
-    else {
+    } else {
       cb1.getSelectionModel().selectFirst();
     }
-    
+
     cb2 = new ChoiceBox<String>();
-    cb2.getItems().addAll("No","Yes");
+    cb2.getItems().addAll("No", "Yes");
     cb2.setStyle("-fx-font-size:15");
-    
+
     if (curEmployee.isScheduling()) {
       cb2.getSelectionModel().selectLast();
-    }
-    else {
+    } else {
       cb2.getSelectionModel().selectFirst();
     }
-    
+
     cb3 = new ChoiceBox<String>();
     cb3.getItems().addAll("No", "Yes");
     cb3.setStyle("-fx-font-size:15");
-    
+
     if (curEmployee.isWiGrow()) {
       cb3.getSelectionModel().selectLast();
-    }
-    else {
+    } else {
       cb3.getSelectionModel().selectFirst();
     }
-    
+
     if (cb1.getSelectionModel().getSelectedIndex() == 0) {
       curEmployee.setExceptionReport(false);
     }
@@ -236,9 +235,9 @@ public class OptionsScene extends Scene {
     backButton.setStyle("-fx-font-size:20");
     backButton.setMinWidth(100);
     backButton.setMinHeight(50);
-    
+
     backButton.setOnAction(e -> {
-      
+
       if (cb1.getSelectionModel().getSelectedIndex() == 0) {
         curEmployee.setExceptionReport(false);
       }
@@ -259,7 +258,7 @@ public class OptionsScene extends Scene {
       }
 
       Main.switchToHome(this.mainStage);
-      });
+    });
 
     // Set elements in the HBox and set the BorderPane bottom panel
     bottomControls.getChildren().addAll(backButton);

@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,7 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-//import taskMatch.JSONParser;
+// import taskMatch.JSONParser;
 
 /**
  * Scene that shows the report of tasks assign to employees. Generates a file if desired.
@@ -99,20 +98,20 @@ public class ResultsScene extends Scene {
     // Make center box for reporting tasks
     HBox reportBox = new HBox();
     reportBox.setPadding(new Insets(0, 60, 50, 60));
-    
-   
+
+
 
     List<String> list = new ArrayList<String>();
-    for(int i = 0; i < Main.getAllTasks().size(); ++i) {
-    	String s = "[" + Main.getAllTasks().get(i).getDescription() + "]\n\t\t";
-    	for(int j = 0; j< Main.getAllTasks().get(i).getEmployees().size(); ++j) {
-    		s = s + "[" + Main.getAllTasks().get(i).getEmployees().get(j).getName() +"]";
-    		
-    	}
-    	list.add(s);    		
-    		
+    for (int i = 0; i < Main.getAllTasks().size(); ++i) {
+      String s = "[" + Main.getAllTasks().get(i).getDescription() + "]\n\t\t";
+      for (int j = 0; j < Main.getAllTasks().get(i).getEmployees().size(); ++j) {
+        s = s + "[" + Main.getAllTasks().get(i).getEmployees().get(j).getName() + "]";
+
+      }
+      list.add(s);
+
     }
-    
+
     // ListView Object
     ListView<String> reportList = new ListView<>();
 

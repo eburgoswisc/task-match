@@ -1,7 +1,6 @@
 /**
- * This is the main scene for the program. It is this scene that is first
- * viewed when the program first opens, and it's also from herer that a 
- * majority of the program is controlled.
+ * This is the main scene for the program. It is this scene that is first viewed when the program
+ * first opens, and it's also from herer that a majority of the program is controlled.
  */
 
 package application;
@@ -11,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -62,19 +60,19 @@ public class HomeScene extends Scene {
    * @param root is the BorderPane to modify
    */
   private void initTop(BorderPane root) {
-    HBox topControl = new HBox(10); //holds all the elements for the top part of the Scene
+    HBox topControl = new HBox(10); // holds all the elements for the top part of the Scene
 
-    VBox topButtons = new VBox(10); //holds all the buttons in the top part of the Scene
+    VBox topButtons = new VBox(10); // holds all the buttons in the top part of the Scene
     topButtons.setPrefWidth(150);
 
-    //Changes the scene to allow user to add employees to the unit
+    // Changes the scene to allow user to add employees to the unit
     Button addEmployeesButton = new Button("Choose Employees");
     addEmployeesButton.setMinWidth(topButtons.getPrefWidth());
     addEmployeesButton.setOnAction(e -> {
       Main.switchToAddEmployeesAuto(this.mainStage);
     });
 
-    //Changes the scene to allow users to add new, non-existing tasks
+    // Changes the scene to allow users to add new, non-existing tasks
     Button addTasksButton = new Button("Add New Task");
     addTasksButton.setMinWidth(topButtons.getPrefWidth());
     addTasksButton.setOnAction(e -> {
@@ -154,9 +152,10 @@ public class HomeScene extends Scene {
     generateReport.setMinWidth(200);
     generateReport.setMinHeight(100);
     generateReport.setOnAction(e -> {
-    	this.produceResult();
+      this.produceResult();
       Main.switchToResults(this.mainStage);
-      JSONFileParser.write(Main.getCurFileOpen()); //TODO fix this. this is where the exception is generated. 
+      JSONFileParser.write(Main.getCurFileOpen()); // TODO fix this. this is where the exception is
+                                                   // generated.
     });
 
 
@@ -166,11 +165,11 @@ public class HomeScene extends Scene {
     fileChooseButton.setStyle("-fx-font-size:20");
     fileChooseButton.setMinWidth(200);
     fileChooseButton.setMinHeight(100);
-    
+
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Input File");
     fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
-    
+
     fileChooseButton.setOnAction(e -> {
       File selectedFile = fileChooser.showOpenDialog(mainStage);
 
@@ -208,18 +207,19 @@ public class HomeScene extends Scene {
     bottomControls.getChildren().addAll(fileChooseButton, generateReport, logoPosition);
     root.setBottom(bottomControls);
   }
-  
+
   private void produceResult() {
-		while(!Main.getEmployeesInUnit().isEmpty())
-			for(int i = 0; i < Main.getAllTasks().size(); ++i) {
-				if(!Main.getEmployeesInUnit().isEmpty()) {
-					Random random = new Random();
-					int index = random.nextInt(Main.getEmployeesInUnit().size());
-					Task t = Main.getAllTasks().get(i);
-					t.assignTo(Main.getEmployeesInUnit().get(index));
-					Main.setTask(i, t);
-					Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(index));
-				}
-			}
-	}
+    while (!Main.getEmployeesInUnit().isEmpty()) {
+      for (int i = 0; i < Main.getAllTasks().size(); ++i) {
+        if (!Main.getEmployeesInUnit().isEmpty()) {
+          Random random = new Random();
+          int index = random.nextInt(Main.getEmployeesInUnit().size());
+          Task t = Main.getAllTasks().get(i);
+          t.assignTo(Main.getEmployeesInUnit().get(index));
+          Main.setTask(i, t);
+          Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(index));
+        }
+      }
+    }
+  }
 }

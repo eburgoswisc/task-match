@@ -20,67 +20,67 @@ import javafx.stage.Stage;
 public class AddTaskSceneManual extends Scene {
 
 
-	Stage mainStage;
+  Stage mainStage;
 
-	public AddTaskSceneManual(Stage mainStage, BorderPane root, double width, double height) {
-		super(root, width, height);
-		this.mainStage = mainStage;
-		this.mainStage.setTitle("Add a New Task");
+  public AddTaskSceneManual(Stage mainStage, BorderPane root, double width, double height) {
+    super(root, width, height);
+    this.mainStage = mainStage;
+    this.mainStage.setTitle("Add a New Task");
 
-		//root.autosize();
-		root.setPadding(new Insets(20));
+    // root.autosize();
+    root.setPadding(new Insets(20));
 
-		Label taskLabel = new Label("Task");
-		TextField tasksInput = new TextField();
+    Label taskLabel = new Label("Task");
+    TextField tasksInput = new TextField();
 
-		Label favLabel = new Label("Favorable");
+    Label favLabel = new Label("Favorable");
 
-		ChoiceBox favInput =
-				new ChoiceBox(FXCollections.observableArrayList("No", new Separator(), "Yes"));
-		favInput.getSelectionModel().selectFirst();
-		favInput.setStyle("-fx-font-size:15");
+    ChoiceBox favInput =
+        new ChoiceBox(FXCollections.observableArrayList("No", new Separator(), "Yes"));
+    favInput.getSelectionModel().selectFirst();
+    favInput.setStyle("-fx-font-size:15");
 
-		VBox labels = new VBox(20); // Label column
-		labels.getChildren().addAll(taskLabel, favLabel);
+    VBox labels = new VBox(20); // Label column
+    labels.getChildren().addAll(taskLabel, favLabel);
 
-		VBox textInputs = new VBox(10); // Textfield column
-		textInputs.getChildren().addAll(tasksInput, favInput);
+    VBox textInputs = new VBox(10); // Textfield column
+    textInputs.getChildren().addAll(tasksInput, favInput);
 
-		labels.setPadding(new Insets(5, 0, 0, 10));
-		textInputs.setPadding(new Insets(0, 0, 0, 0));
+    labels.setPadding(new Insets(5, 0, 0, 10));
+    textInputs.setPadding(new Insets(0, 0, 0, 0));
 
-		HBox inputs = new HBox(10); // All central inputs
-		inputs.setAlignment(Pos.BASELINE_CENTER);
-		inputs.setPadding(new Insets(20, 0, 0, 0));
-		inputs.getChildren().addAll(labels, textInputs);
+    HBox inputs = new HBox(10); // All central inputs
+    inputs.setAlignment(Pos.BASELINE_CENTER);
+    inputs.setPadding(new Insets(20, 0, 0, 0));
+    inputs.getChildren().addAll(labels, textInputs);
 
-		Button cancel = new Button("Cancel");
-		cancel.setOnAction(e -> {
-			Main.switchToHome(this.mainStage);
-		});
+    Button cancel = new Button("Cancel");
+    cancel.setOnAction(e -> {
+      Main.switchToHome(this.mainStage);
+    });
 
-		Button add = new Button("Add");
-		add.setOnAction(e -> {
-			boolean fav = getBoolean((String) favInput.getValue());
-			Task task = new Task(tasksInput.getText(), fav);
-			Main.addTask(task);
-			Main.switchToHome(this.mainStage);
-		});
+    Button add = new Button("Add");
+    add.setOnAction(e -> {
+      boolean fav = getBoolean((String) favInput.getValue());
+      Task task = new Task(tasksInput.getText(), fav);
+      Main.addTask(task);
+      Main.switchToHome(this.mainStage);
+    });
 
-		HBox navButtons = new HBox(30);
-		navButtons.setAlignment(Pos.CENTER_RIGHT);
-		navButtons.setPadding(new Insets(20, 20, 100, 20));
-		navButtons.getChildren().addAll(cancel, add);
+    HBox navButtons = new HBox(30);
+    navButtons.setAlignment(Pos.CENTER_RIGHT);
+    navButtons.setPadding(new Insets(20, 20, 100, 20));
+    navButtons.getChildren().addAll(cancel, add);
 
-		root.setTop(inputs);
-		root.setCenter(navButtons);
-	}
+    root.setTop(inputs);
+    root.setCenter(navButtons);
+  }
 
-	private boolean getBoolean(String choice) {
-		if (choice.equalsIgnoreCase("Yes")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+  private boolean getBoolean(String choice) {
+    if (choice.equalsIgnoreCase("Yes")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

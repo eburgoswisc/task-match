@@ -31,7 +31,7 @@ public class AddEmployeeSceneAuto extends Scene {
     super(root, width, height);
     this.mainStage = mainStage;
     this.mainStage.setTitle("Employees working today");
-    
+
     root.autosize();
     root.setPadding(new Insets(10));
 
@@ -54,9 +54,9 @@ public class AddEmployeeSceneAuto extends Scene {
     employees.addAll(Main.getAllEmployees());
     ComboBox<Employee> comboBox = new ComboBox<Employee>(); // create a combo box object
     comboBox.setItems(employees);
-    
+
     addToUnit.setOnAction(e -> {
-      if(comboBox.getSelectionModel().getSelectedItem() instanceof Employee) {
+      if (comboBox.getSelectionModel().getSelectedItem() instanceof Employee) {
         Main.getEmployeesInUnit().add(comboBox.getSelectionModel().getSelectedItem());
         Main.getAllEmployees().remove(comboBox.getSelectionModel().getSelectedItem());
         employees.clear();
@@ -64,7 +64,7 @@ public class AddEmployeeSceneAuto extends Scene {
         comboBox.setItems(employees);
       }
     });
-    
+
     HBox line1 = new HBox(10);
     HBox line2 = new HBox(10);
     HBox line3 = new HBox(40);
@@ -72,22 +72,23 @@ public class AddEmployeeSceneAuto extends Scene {
 
     Label fileName = new Label(Main.getCurFileOpenName());
     fileName.setFont(new Font(15));
-    
-    line1.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(4), new BorderWidths(2))));
-    
+
+    line1.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID,
+        new CornerRadii(4), new BorderWidths(2))));
+
     line1.setSpacing(10);
-    
+
     line1.getChildren().addAll(inputFile, fileName);
 
     line2.getChildren().addAll(comboBox, addToUnit);
 
     line3.setAlignment(Pos.BOTTOM_RIGHT);
     line3.getChildren().addAll(addNewEmployee, back);
-    
-    
+
+
     spacing.getChildren().addAll(line1, line2, line3);
     spacing.setSpacing(30);
-    root.setPadding(new Insets(15,15,15,15));
+    root.setPadding(new Insets(15, 15, 15, 15));
 
     root.setTop(spacing);
 
