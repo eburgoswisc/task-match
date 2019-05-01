@@ -113,9 +113,20 @@ public class ResultsScene extends Scene {
     for (int i = 0; i < Main.getAllTasks().size(); ++i) {
       String s = "[" + Main.getAllTasks().get(i).getDescription() + "]\n\t\t";
       for (int j = 0; j < Main.getAllTasks().get(i).getEmployees().size(); ++j) {
-        s = s + "[" + Main.getAllTasks().get(i).getEmployees().get(j).getName() + "]";
+    	Employee current = Main.getAllTasks().get(i).getEmployees().get(j);
+        s = s + "[" + current.getName() + "]\t";
+        if (!current.isWiGrow()) {
+        	s = s + "NOTE: Obtain WiGrow";
+        }
+        if (!current.isExceptionReport()) {
+        	s = s + "NOTE: Obtain Exception Report";
+        }
+        if (!current.isScheduling()) {
+        	s = s + "NOTE: Obtain Scheduling";
+        }
 
       }
+      // Add to list
       list.add(s);
 
     }
@@ -135,7 +146,12 @@ public class ResultsScene extends Scene {
     root.setCenter(reportBox);
   }
 
-  private void initTop(BorderPane root) {
+  /**
+   * Method for setting up top of screen
+   * 
+ * @param root
+ */
+private void initTop(BorderPane root) {
     // Make HBox
     HBox topBox = new HBox();
     // Set Label
@@ -193,7 +209,7 @@ public class ResultsScene extends Scene {
       // Do nothing
 
     }
-    // Alert popup
+    // Alert pop up
     Alert downloadSuccess =
         new Alert(AlertType.NONE, "Successfully Downloaded Report! It will be named " + fileName
             + " and will be located in your program's local directory.");
