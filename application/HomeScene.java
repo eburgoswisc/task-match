@@ -192,17 +192,20 @@ public class HomeScene extends Scene {
     fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
 
     fileChooseButton.setOnAction(e -> {
-      Main.getAllEmployees().clear();
-      Main.getEmployeesInUnit().clear();
-      Main.getAllTasks().clear();
-      File selectedFile = fileChooser.showOpenDialog(mainStage);
-
-      try {
-        JSONFileParser.readData(selectedFile.getAbsolutePath());
-        Main.setCurFileOpen(selectedFile.getAbsolutePath());
-        Main.setCurFileOpenName(selectedFile.getName());
-      } catch (Exception e1) {
-        // won't happen
+      if(Main.getCurFileOpenName().equals("file not found")) {   
+        try {
+          File selectedFile = fileChooser.showOpenDialog(mainStage);
+          JSONFileParser.readData(selectedFile.getAbsolutePath());
+          Main.setCurFileOpen(selectedFile.getAbsolutePath());
+          Main.setCurFileOpenName(selectedFile.getName());
+        } catch (Exception e1) {
+          // won't happen
+        }
+      }
+      else {
+        Alert alreadyLoaded = new Alert(AlertType.WARNING, Main.getCurFileOpenName()+" has already been loaded, "
+            + "please restart the program to load a different file.");
+        alreadyLoaded.showAndWait();
       }
     });
 
