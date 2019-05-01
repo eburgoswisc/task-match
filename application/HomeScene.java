@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -211,10 +213,12 @@ public class HomeScene extends Scene {
 		while(!Main.getEmployeesInUnit().isEmpty())
 			for(int i = 0; i < Main.getAllTasks().size(); ++i) {
 				if(!Main.getEmployeesInUnit().isEmpty()) {
+					Random random = new Random();
+					int index = random.nextInt(Main.getEmployeesInUnit().size());
 					Task t = Main.getAllTasks().get(i);
-					t.assignTo(Main.getEmployeesInUnit().get(0));
+					t.assignTo(Main.getEmployeesInUnit().get(index));
 					Main.setTask(i, t);
-					Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(0));
+					Main.removeEmployeeFromTheUnit(Main.getEmployeesInUnit().get(index));
 				}
 			}
 	}
