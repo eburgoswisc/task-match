@@ -7,11 +7,13 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -68,7 +70,10 @@ public class AddEmployeeSceneManual extends Scene {
       boolean exceptionChoice = getBooleanFromCB((String) exceptionCB.getValue());
       boolean schedulingChoice = getBooleanFromCB((String) schedulingCB.getValue());
       boolean wigrowChoice = getBooleanFromCB((String) wigrowCB.getValue());
+      
+      try {
       long idEntered = Long.parseLong(idText.getText());
+      
 
       Employee newEmployee = new Employee(nameText.getText(), idEntered, exceptionChoice,
           schedulingChoice, wigrowChoice);
@@ -76,6 +81,11 @@ public class AddEmployeeSceneManual extends Scene {
       Main.getAllEmployees().add(newEmployee);
 
       Main.switchToAddEmployeesAuto(this.mainStage);
+      
+      } catch(NumberFormatException f) {
+        Alert incorrectFormat = new Alert(AlertType.WARNING, "Please enter a 9 digit integer ID");
+        incorrectFormat.showAndWait();
+      }
     });
 
 

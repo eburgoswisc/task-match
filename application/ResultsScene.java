@@ -72,7 +72,7 @@ public class ResultsScene extends Scene {
     HBox bottomButtons = new HBox();
     bottomButtons.setPrefWidth(150);
     bottomButtons.setAlignment(Pos.CENTER);
-    bottomButtons.setPadding(new Insets(0, 60, 50, 60));
+    bottomButtons.setPadding(new Insets(0, 60, 20, 60));
     bottomButtons.setSpacing(50);
 
     // Report button
@@ -155,7 +155,7 @@ public class ResultsScene extends Scene {
     titleLabel.setStyle("-fx-font-size:20");
     titleLabel.setText(
         "Fair Job Planning System " + date.format(new Date()) + " " + clock.format(new Date()));
-    titleLabel.setPadding(new Insets(20, 0, 20, 150));
+    titleLabel.setPadding(new Insets(20, 0, 20, 100));
 
     // Add stuff to topBox
     topBox.getChildren().addAll(titleLabel);

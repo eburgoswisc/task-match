@@ -57,7 +57,7 @@ public class Main extends Application {
   public static void switchToResults(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new ResultsScene(primaryStage, root, 820, 420);
+      currentScene = new ResultsScene(primaryStage, root, 770, 420);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {
@@ -68,7 +68,7 @@ public class Main extends Application {
   public static void switchToHome(Stage primaryStage) {
     try {
       BorderPane root = new BorderPane();
-      currentScene = new HomeScene(primaryStage, root, 920, 600); // TODO: add list instead of null
+      currentScene = new HomeScene(primaryStage, root, 920, 600);
       primaryStage.setScene(currentScene);
       primaryStage.show();
     } catch (Exception e) {
