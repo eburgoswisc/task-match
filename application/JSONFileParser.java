@@ -9,13 +9,19 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+/**
+ * Class for a json parser. It reads in json and 
+ * writes it out as output
+ * 
+ *
+ */
 @SuppressWarnings("unchecked")
 public class JSONFileParser {
 
   /**
    * Helper method to read employees data and add the employees to the treeMap
    * 
-   * @param jaEmployees
+   * @param jaEmployees - JSONArray
    */
   private static void addEmployees(JSONArray jaEmployees) {
     // go throw the JSONArray jaEmployees .
@@ -90,7 +96,7 @@ public class JSONFileParser {
       // parse each object and add to treeMap or tasks list
       addEmployees(jaEmployees);
       addTasks(jaTasks);
-
+      // Should never happen
     } catch (FileNotFoundException e) {
       e.printStackTrace();
       throw e;
@@ -100,15 +106,21 @@ public class JSONFileParser {
     }
   }
 
-  public static void write(String jsonFilePath) {
+  /**
+   * Method for writing out a JSON file
+   * 
+ * @param jsonFilePath
+ */
+public static void write(String jsonFilePath) {
+	// Get JSON objects
     JSONObject doc = new JSONObject();
     JSONArray employeesArray = new JSONArray();
     JSONArray tasksArray = new JSONArray();
-
+    // Get all the employees in a list
     ArrayList<Employee> allEmployees = Main.getAllEmployees();
     allEmployees.addAll(Main.getEmployeesInUnit()); // done because employees in unit do not show up
                                                     // in allEmployees
-
+    // Loop through employees and add them to a json object
     for (Employee e : allEmployees) {
       JSONObject curEmployee = new JSONObject();
       curEmployee.put("ID", e.getId());
@@ -119,8 +131,10 @@ public class JSONFileParser {
       curEmployee.put("Points", e.getPointTask());
       employeesArray.add(curEmployee);
     }
+    // Add employees to overall json document
     doc.put("employees", employeesArray);
 
+    // Loop through tasks and add to json object
     for (Task t : Main.getAllTasks()) {
       JSONObject curTask = new JSONObject();
       curTask.put("ID", t.getID());
@@ -128,68 +142,17 @@ public class JSONFileParser {
       curTask.put("Favorable", t.isFavorable());
       tasksArray.add(curTask);
     }
+    // Add Tasks to json document
     doc.put("tasks", tasksArray);
 
     try (FileWriter file = new FileWriter(jsonFilePath)) {
+    	// Write to file
       file.write(doc.toJSONString());
       file.flush();
+   // Should not happen
     } catch (IOException e) {
       e.printStackTrace();
       JSONFileParser.write(jsonFilePath);
-    }
-  }
-
-  //Sorry I couldn't figure out how to fix the writer, so I just wrote a new one
-  @Deprecated
-  public static void writeData(String jsonFilepath) {
-    // Create JSONArray Objects
-    JSONObject doc = new JSONObject();
-    JSONArray employeesArray = new JSONArray();
-    JSONArray tasksArray = new JSONArray();
-
-    // Name for output file: test_output.json
-    FileWriter f = null;
-    try {
-      f = new FileWriter(jsonFilepath);
-    } catch (IOException e) {
-      e.printStackTrace();
-      // Do Nothing
-    }
-
-    // Place inside loop
-    try {
-      for (Employee e : Main.getAllEmployees()) {
-        JSONObject employee = new JSONObject();
-        employee.put("ID", e.getId());
-        employee.put("Name", e.getName());
-        employee.put("Exception Report", e.isExceptionReport());
-        employee.put("Scheduling", e.isScheduling());
-        employee.put("WIGrow", e.isWiGrow());
-
-        // Add to JSON Array
-        employeesArray.add(employee);
-      }
-
-      // Loop through Tasks and make JSONObjects
-      for (Task t : Main.getAllTasks()) {
-        JSONObject tJson = new JSONObject();
-        tJson.put("ID", t.getID());
-        tJson.put("Description", t.getDescription());
-        tJson.put("Favorable", t.isFavorable());
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      // Do nothing
-    }
-    try {
-      // Write JSONArrays
-      doc.put("employess", employeesArray);
-      doc.put("tasks", tasksArray);
-      f.write(doc.toJSONString());
-
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.out.println("File already exists");
     }
   }
 }
