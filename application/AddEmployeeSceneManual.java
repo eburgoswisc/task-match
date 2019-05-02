@@ -23,6 +23,7 @@ import javafx.stage.Stage;
  * 
  * @author Akovi Mensah
  */
+@SuppressWarnings({"rawtypes","unchecked"})
 public class AddEmployeeSceneManual extends Scene {
 
 	Stage mainStage; //the main stage
@@ -49,7 +50,6 @@ public class AddEmployeeSceneManual extends Scene {
 	 * @param width, the width of GUI
 	 * @param height,the height of the GUI
 	 */
-	@SuppressWarnings("unchecked")
 	public AddEmployeeSceneManual(Stage mainStage, BorderPane root, double width, double height) {
 		//call superclass 3 args constructor and initialize mainStage
 		super(root, width, height);
