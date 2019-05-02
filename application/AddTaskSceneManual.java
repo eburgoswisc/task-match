@@ -1,6 +1,3 @@
-/**
- * TODO: Ritik
- */
 package application;
 
 import javafx.collections.FXCollections;
@@ -24,28 +21,33 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * This is the scene for the window to add new tasks manually *
+ */
 public class AddTaskSceneManual extends Scene {
-
-
   Stage mainStage;
 
+  /**
+   * Construct this scene
+   */
   public AddTaskSceneManual(Stage mainStage, BorderPane root, double width, double height) {
     super(root, width, height);
     this.mainStage = mainStage;
     this.mainStage.setTitle("Add a New Task");
-    
+
     HBox fileInfo = new HBox();
-    
+
     Label inputFile = new Label("File loaded: ");
     inputFile.setFont(new Font(15));
-    
-    Label fileName = new Label(Main.getCurFileOpenName());
+
+    Label fileName = new Label(Main.getCurFileOpenName()); // Name of file selected
     fileName.setFont(new Font(15));
-    
+
+    // Section to display information about file
     fileInfo.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID,
         new CornerRadii(4), new BorderWidths(2))));
     fileInfo.getChildren().addAll(inputFile, fileName);
-    // root.autosize();
+
     root.setPadding(new Insets(20));
 
     Label taskLabel = new Label("Task");
@@ -53,9 +55,10 @@ public class AddTaskSceneManual extends Scene {
 
     Label favLabel = new Label("Favorable");
 
+    // Drop down box to select whether favorable
     ChoiceBox<Object> favInput =
         new ChoiceBox<Object>(FXCollections.observableArrayList("No", new Separator(), "Yes"));
-    
+
     favInput.getSelectionModel().selectFirst();
     favInput.setStyle("-fx-font-size:15");
 
@@ -73,11 +76,13 @@ public class AddTaskSceneManual extends Scene {
     inputs.setPadding(new Insets(30, 0, 0, 0));
     inputs.getChildren().addAll(labels, textInputs);
 
+    // Returns to home scene
     Button cancel = new Button("Cancel");
     cancel.setOnAction(e -> {
       Main.switchToHome(this.mainStage);
     });
 
+    // Adds the task to the task list
     Button add = new Button("Add");
     add.setOnAction(e -> {
       boolean fav = getBoolean((String) favInput.getValue());
@@ -90,12 +95,17 @@ public class AddTaskSceneManual extends Scene {
     navButtons.setAlignment(Pos.CENTER_RIGHT);
     navButtons.setPadding(new Insets(20, 20, 100, 20));
     navButtons.getChildren().addAll(cancel, add);
-    
+
     root.setTop(fileInfo);
     root.setCenter(inputs);
     root.setBottom(navButtons);
   }
 
+  /**
+   * Returns the boolean value associated with the string
+   * 
+   * @return true if "yes", false if "no"
+   */
   private boolean getBoolean(String choice) {
     if (choice.equalsIgnoreCase("Yes")) {
       return true;
